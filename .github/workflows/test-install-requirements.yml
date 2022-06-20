@@ -17,5 +17,5 @@ jobs:
         with:
           python-version: "3.9"
       - name: Install Requirements Default
-        uses: envasetechnologies/.github/actions/python/install-requirements
+        uses: envasetechnologies/.github/actions/python/install-requirements@v0
 
