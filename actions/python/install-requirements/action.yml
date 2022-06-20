@@ -4,7 +4,7 @@ inputs:
   requirements-file:
     description: File containing the requirements to install.
     required: true
-    default: requirements.txt
+    default: requirements-dev.txt
   index-url:
     description: URL for an index other than PyPI
     required: false
