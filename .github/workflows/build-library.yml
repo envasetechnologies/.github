@@ -4,11 +4,13 @@ on:
       default-shell:
         description: Shell used to run steps.
         required: false
+        type: string
         default: bash
       python-version:
         description: Python versions in which the job should run.
         required: true
-        default: ["3.7", "3.8", "3.9"]
+        type: string
+        default: '["3.7", "3.8", "3.9"]'
     secrets:
       artifactory-password:
         required: true
@@ -19,7 +21,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ${{ inputs.python-version }}
+        python-version: ${{ toJson(inputs.python-version) }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v3

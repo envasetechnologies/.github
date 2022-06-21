@@ -6,11 +6,12 @@ on:
   pull_request:
     branches: [ "main" ]
 
-  workflow_dispatch:
-
 jobs:
   build-library-job:
-    uses: envasetechnologies/.github/workflow-templates/python/build-library.yml@v0
+    uses: envasetechnologies/.github/workflows/build-library.yml@v0
+    with:
+      python-version: '["3.8"]'
+    
   # build:
   #   runs-on: ubuntu-latest
   #   steps:
