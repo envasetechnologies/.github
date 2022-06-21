@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-library-job:
-    uses: ./build-library.yml
+    uses: ./build-library.yml@v0
     with:
       python-version: '["3.8"]'
     
