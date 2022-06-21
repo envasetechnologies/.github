@@ -8,15 +8,19 @@ inputs:
   index-url:
     description: URL for an index other than PyPI
     required: false
+    default: PyPI
 runs:
   using: "composite"
   steps:
     - name: Update PIP
       run: python -m pip install --upgrade pip
       shell: bash
-    - name: Install Requirements 
+    - name: Install Requirements PyPI
       run: pip install -r ${{ inputs.requirements-file }}
+      if: ${{ inputs.index-url == "PyPI" }}
       shell: bash
+    - name: Install Requirements External
+      run: pip install -r ${{ inputs.requirements-file }} --index-url ${{ inputs.index-url }}
     - name: Save Installed Requirements
       run: pip list > installed-requirements.txt
       shell: bash
