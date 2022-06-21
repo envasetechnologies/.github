@@ -17,10 +17,11 @@ runs:
       shell: bash
     - name: Install Requirements PyPI
       run: pip install -r ${{ inputs.requirements-file }}
-      if: ${{ inputs.index-url == "PyPI" }}
+      if: ${{ inputs.index-url == 'PyPI' }}
       shell: bash
     - name: Install Requirements External
       run: pip install -r ${{ inputs.requirements-file }} --index-url ${{ inputs.index-url }}
+      shell: bash
     - name: Save Installed Requirements
       run: pip list > installed-requirements.txt
       shell: bash
