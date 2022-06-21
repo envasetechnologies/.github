@@ -11,11 +11,23 @@ Workflow templates and actions should be placed in the corresponding language fo
 This section documents the workflows and actions provided for [Python](https://www.python.org/) projects and that can be reused in new Python projects.
 ## Python Starter Workflows
 
-Coming Soon!!!
+There are different starter workflows defined to setup CI/CD for different Python projects. The following sections document which workflows are provided.
 
-## Python Workflow Templates
+### python-ci-build-library
 
-Coming Soon!!!
+Builds a Python library.
+
+> TODO: complete the documentation.
+
+## Python Callable Workflows
+
+Starter workflows invoke callable workflows that implement the steps, so that we can easily apply fixes and changes to all projects using the same workflow. The following callable workflows have been provided.
+
+### python-build-library
+
+This workflow implements the steps to test and build a Python library used in Envase projects.
+
+> TODO: complete documentation.
 
 ## Python Custom Actions
 
