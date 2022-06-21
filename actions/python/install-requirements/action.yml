@@ -28,7 +28,7 @@ runs:
     - name: Save Installed Requirements
       run: pip list > installed-requirements.txt
       shell: bash
-    - name: Upload Installed Requirements Spec
+    - name: Upload Installed Requirements Manifest
       uses: actions/upload-artifact@v3
       with:
         name: installed-requirements
