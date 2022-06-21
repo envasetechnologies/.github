@@ -9,29 +9,35 @@ inputs:
     description: URL for an index other than PyPI
     required: false
     default: PyPI
+  output-dir:
+    description: Folder in which store all output files.
+    required: false
+    default: output
+  default-shell:
+    description: Default shell in which to run the action.
+    required: false
+    default: bash
 runs:
   using: "composite"
   steps:
     - name: Update PIP
       run: python -m pip install --upgrade pip
-      shell: bash
+      shell: ${{ inputs.default-shell }}
     - name: Install Requirements PyPI
       run: pip install -r ${{ inputs.requirements-file }}
       if: ${{ inputs.index-url == 'PyPI' }}
-      shell: bash
+      shell: ${{ inputs.default-shell }}
     - name: Install Requirements External
       run: pip install -r ${{ inputs.requirements-file }} --index-url ${{ inputs.index-url }}
-      shell: bash
+      shell: ${{ inputs.default-shell }}
     - name: Display Installed Requirements
       run: pip list
-      shell: bash
+      shell: ${{ inputs.default-shell }}
+    - name: Create Output Directory
+      run: mkdir ${{ inputs.output-dir }}
+      shell: ${{ inputs.default-shell }}
+      continue-on-error: true
     - name: Save Installed Requirements
-      run: pip list > installed-requirements.txt
-      shell: bash
-    - name: Upload Installed Requirements Manifest
-      uses: actions/upload-artifact@v3
-      with:
-        name: installed-requirements
-        path: installed-requirements.txt
+      run: pip list > ${{ inputs.output-dir }}/installed-requirements.txt
+      shell: ${{ inputs.default-shell }}
     
-      
