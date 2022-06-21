@@ -22,10 +22,16 @@ runs:
     - name: Install Requirements External
       run: pip install -r ${{ inputs.requirements-file }} --index-url ${{ inputs.index-url }}
       shell: bash
-    - name: Save Installed Requirements
-      run: pip list > installed-requirements.txt
-      shell: bash
     - name: Display Installed Requirements
       run: pip list
       shell: bash
+    - name: Save Installed Requirements
+      run: pip list > installed-requirements.txt
+      shell: bash
+    - name: Upload Installed Requirements Spec
+      uses: actions/upload-artifact@v3
+      with:
+        name: installed-requirements
+        path: installed-requirements.txt
+    
       
