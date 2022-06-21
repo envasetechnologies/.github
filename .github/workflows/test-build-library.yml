@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-library-job:
-    uses: envasetechnologies/.github/workflows/build-library.yml@v0
+    uses: ./build-library.yml
     with:
       python-version: '["3.8"]'
     
