@@ -1,0 +1,25 @@
+name: Test Install Requirements
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  workflow_dispatch:
+
+jobs:
+  build-library-job:
+    uses: envasetechnologies/.github/workflow-templates/python/build-library.yml@v0
+  # build:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: actions/setup-python@v3
+  #       with:
+  #         python-version: "3.9"
+  #     - name: Install Requirements Default
+  #       uses: envasetechnologies/.github/actions/python/install-requirements@v0
+  #       with:
+  #         requirements-file: requirements.txt
+  #         index-url: https://admin:${{ secrets.ARTIFACTORY_PASSWORD }}@profittools.jfrog.io/profittools/api/pypi/pypi/simple

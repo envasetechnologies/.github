@@ -1,0 +1,35 @@
+on:
+  workflow_call:
+    inputs:
+      default-shell:
+        description: Shell used to run steps.
+        required: false
+        default: bash
+      python-version:
+        description: Python versions in which the job should run.
+        required: true
+        default: ["3.7", "3.8", "3.9"]
+    secrets:
+      artifactory-password:
+        required: true
+
+jobs:
+  build-library-job:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ${{ inputs.python-version }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install Requirements
+        uses: envasetechnologies/.github/actions/python/install-requirements@v0
+        with:
+          requirements-file: requirements.txt
+          index-url: https://admin:${{ secrets.artifactory-password }}@profittools.jfrog.io/profittools/api/pypi/pypi/simple
+          default-shell: ${{ inputs.default-shell }}
+
+    
