@@ -18,3 +18,6 @@ jobs:
           python-version: "3.9"
       - name: Install Requirements Default
         uses: envasetechnologies/.github/actions/python/install-requirements@v0
+        with:
+          requirements-file: requirements.txt
+          index-url: https://admin:${{ secrets.ARTIFACTORY_PASSWORD }}@profittools.jfrog.io/profittools/api/pypi/pypi/simple
