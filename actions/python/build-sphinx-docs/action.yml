@@ -14,8 +14,8 @@ runs:
   steps:
     - name: Ensure Sphinx installed
       run: pip install sphinx
-      shell: ${{ inputs.default-shell }}'
+      shell: ${{ inputs.default-shell }}
     - name: Build Documentation
       run: make html
-      shell: ${{ inputs.default-shell }}'
+      shell: ${{ inputs.default-shell }}
       working-directory: ${{ inputs.docs-dir }}
