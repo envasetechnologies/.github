@@ -2,3 +2,5 @@ assertpy
 bolt-ta
 coverage
 nose
+sphinx
+sphinx-rtd-theme
