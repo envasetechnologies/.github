@@ -15,4 +15,7 @@ config = {
             'logging-clear-handlers': True,
         },
     },
+    'setup': {
+        'command': 'bdist_wheel'
+    },
 }
