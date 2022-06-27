@@ -1,0 +1,16 @@
+name: Build Library
+description: Builds a Python wheel using bolt.
+inputs:
+  default-shell:
+    description: Default shell in which to run the action.
+    required: false
+    default: bash
+runs:
+  using: composite
+  steps:
+    - name: Ensure Wheel Installed
+      run: pip install wheel
+      shell: ${{ inputs.default-shell }}
+    - name: Create Wheel
+      run: bolt setup
+      shell: ${{ inputs.default-shell }}

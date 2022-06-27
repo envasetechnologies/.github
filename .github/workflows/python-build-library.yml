@@ -34,5 +34,12 @@ jobs:
           requirements-file: requirements.txt
           index-url: https://admin:${{ secrets.artifactory-password }}@profittools.jfrog.io/profittools/api/pypi/pypi/simple
           default-shell: ${{ inputs.default-shell }}
-
+      - name: Run Unit Tests
+        uses: envasetechnologies/.github/actions/python/run-unit-tests
+        with:
+          default-shell: ${{ inputs.default-shell }}
+      - name: Build Library
+        uses: envasetechnologies/.github/actions/python/build-library
+        with: 
+          default-shell: ${{ inputs.default-shell }}
     

@@ -1,0 +1,13 @@
+name: Run Unit Tests
+description: Executes the unit tests generating result and coverage reports.
+inputs:
+  default-shell:
+    description: Default shell in which to run the action.
+    required: false
+    default: bash
+runs:
+  using: composite
+  steps:
+    - name: Execute Unit Tests
+      run: bolt cov
+      shell: ${{ inputs.default-shell }}
