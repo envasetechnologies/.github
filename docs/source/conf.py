@@ -14,17 +14,15 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath(os.path.join('..', '..')))
 
-import en_auth.about as about
-
 
 # -- Project information -----------------------------------------------------
 
-project = about.description
-copyright = about.copyright
-author = about.author
+project = 'Testing Actions'
+copyright = 'Envase 2022'
+author = 'Envase'
 
 # The full version, including alpha/beta/rc tags
-release = about.release
+release = '1.0'
 
 rst_epilog = """
 ..  General links:
