@@ -35,11 +35,11 @@ jobs:
           index-url: https://admin:${{ secrets.artifactory-password }}@profittools.jfrog.io/profittools/api/pypi/pypi/simple
           default-shell: ${{ inputs.default-shell }}
       - name: Run Unit Tests
-        uses: envasetechnologies/.github/actions/python/run-unit-tests
+        uses: envasetechnologies/.github/actions/python/run-unit-tests@v0
         with:
           default-shell: ${{ inputs.default-shell }}
       - name: Build Library
-        uses: envasetechnologies/.github/actions/python/build-library
+        uses: envasetechnologies/.github/actions/python/build-library@v0
         with: 
           default-shell: ${{ inputs.default-shell }}
     
