@@ -8,6 +8,5 @@ Envase Authentication/Authorization Utility Library
    :maxdepth: 2
    :caption: Contents:
 
-   reference
-   to-dos
+This is just a test project.
 
