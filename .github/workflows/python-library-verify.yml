@@ -8,13 +8,13 @@ on:
         default: bash
       python-version:
         description: Python versions in which the job should run.
-        required: true
+        required: false
         type: string
         default: '["3.7", "3.8", "3.9"]'
       has-documentation:
         description: Flag to indicate whether the library contains documentation or not.
         type: boolean
-        required: true
+        required: false
         default: true
     secrets:
       artifactory-password:
