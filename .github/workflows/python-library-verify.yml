@@ -11,6 +11,11 @@ on:
         required: true
         type: string
         default: '["3.7", "3.8", "3.9"]'
+      has-documentation:
+        description: Flag to indicate whether the library contains documentation or not.
+        type: boolean
+        required: true
+        default: true
     secrets:
       artifactory-password:
         required: true
@@ -44,6 +49,7 @@ jobs:
         with: 
           default-shell: ${{ inputs.default-shell }}
       - name: Build Documentation
+        if: inputs.has-documentation
         uses: envasetechnologies/.github/actions/python/build-sphinx-docs@v0
         with:
           default-shell: ${{ inputs.default-shell }}
