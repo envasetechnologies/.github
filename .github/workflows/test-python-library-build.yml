@@ -13,3 +13,4 @@ jobs:
       python-version: '["3.8", "3.9"]'
     secrets:
       artifactory-password: ${{ secrets.ARTIFACTORY_PASSWORD }}
+      msteams-webhook: ${{ secrets.PT_MSTEAMS_WEBHOOK}}

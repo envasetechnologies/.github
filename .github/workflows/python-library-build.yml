@@ -19,6 +19,8 @@ on:
     secrets:
       artifactory-password:
         required: true
+      msteams-webhook:
+        required: true
     
 
 jobs:
@@ -59,4 +61,9 @@ jobs:
           CURRENT_BRANCH: ${{ github.head_ref || github.ref_name }}
         with:
           default-shell: ${{ inputs.default-shell }}
+      - name: Notify on Failure
+        uses: skitionek/notify-microsoft-teams@master
+        if: failure()
+        with:
+          webhook_url: ${{ secrets.msteams-webhook }}
     
