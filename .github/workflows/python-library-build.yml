@@ -1,0 +1,62 @@
+on:
+  workflow_call:
+    inputs:
+      default-shell:
+        description: Shell used to run steps.
+        required: false
+        type: string
+        default: bash
+      python-version:
+        description: Python versions in which the job should run.
+        required: false
+        type: string
+        default: '["3.7", "3.8", "3.9"]'
+      has-documentation:
+        description: Flag to indicate whether the library contains documentation or not.
+        type: boolean
+        required: false
+        default: true
+    secrets:
+      artifactory-password:
+        required: true
+    
+
+jobs:
+  build-library-job:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ${{ fromJson(inputs.python-version) }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install Requirements
+        uses: envasetechnologies/.github/actions/python/install-requirements@v0
+        with:
+          requirements-file: requirements.txt
+          index-url: https://admin:${{ secrets.artifactory-password }}@profittools.jfrog.io/profittools/api/pypi/pypi/simple
+          default-shell: ${{ inputs.default-shell }}
+      - name: Run Unit Tests
+        uses: envasetechnologies/.github/actions/python/run-unit-tests@v0
+        with:
+          default-shell: ${{ inputs.default-shell }}
+      - name: Build Library
+        uses: envasetechnologies/.github/actions/python/build-library@v0
+        with: 
+          default-shell: ${{ inputs.default-shell }}
+      - name: Build Documentation
+        if: inputs.has-documentation
+        uses: envasetechnologies/.github/actions/python/build-sphinx-docs@v0
+        with:
+          default-shell: ${{ inputs.default-shell }}
+      - name: Release Library
+        uses: envasetechnologies/.github/actions/python/release@v0
+        env:
+          CURRENT_BRANCH: ${{ github.head_ref || github.ref_name }}
+        with:
+          default-shell: ${{ inputs.default-shell }}
+    

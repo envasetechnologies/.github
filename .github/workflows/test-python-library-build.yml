@@ -1,0 +1,15 @@
+name: Test Build Library
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-library-job:
+    uses: ./.github/workflows/python-library-build.yml
+    with:
+      python-version: '["3.8", "3.9"]'
+    secrets:
+      artifactory-password: ${{ secrets.ARTIFACTORY_PASSWORD }}
