@@ -1,6 +1,9 @@
 import os
 
 import bolt
+import bolt_ptrelease
+
+bolt.register_module_tasks(bolt_ptrelease)
 
 def post_release(config, *args, **kwargs):
     print('Posting Release')

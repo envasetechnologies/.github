@@ -1,4 +1,5 @@
 assertpy
+bolt-ptrelease
 bolt-ta
 coverage
 m2r2
