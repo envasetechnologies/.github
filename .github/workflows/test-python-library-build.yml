@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-library-job:
-    uses: ./.github/workflows/python-library-verify.yml
+    uses: ./.github/workflows/python-library-build.yml
     with:
       python-version: '["3.8", "3.9"]'
     secrets:

@@ -6,7 +6,7 @@ on:
 
 jobs:
   build-library-job:
-    uses: envasetechnologies/.github/.github/workflows/python-library-verify.yml@v1
+    uses: envasetechnologies/.github/.github/workflows/python-library-build.yml@v1
     with:
       python-version: '["3.7", "3.8", "3.9"]'
     secrets:
