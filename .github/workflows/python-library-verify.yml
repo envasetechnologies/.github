@@ -14,8 +14,7 @@ on:
     secrets:
       artifactory-password:
         required: true
-    env:
-      CURRENT_BRANCH: ${{ github.head_ref || github.ref_name }}
+    
 
 jobs:
   build-library-job:
@@ -50,6 +49,8 @@ jobs:
           default-shell: ${{ inputs.default-shell }}
       - name: Release Library
         uses: envasetechnologies/.github/actions/python/release@v0
+        env:
+          CURRENT_BRANCH: ${{ github.head_ref || github.ref_name }}
         with:
           default-shell: ${{ inputs.default-shell }}
     
