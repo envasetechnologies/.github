@@ -36,6 +36,7 @@ This workflow implements the steps to test, build and release a Python library u
 * `default-shell`: Overrides the default shell which is set to `bash`.
 * `python-version`: String representation of a JSON array containing the versions of Python where to test. By default, it uses 3.7, 3.8, and 3.9.
 * `has-documentation`: Indicates whether the library has documentation or not. If the library doesn't have documentation, it skips the documentation build.
+* `runner`: Runner to use for the workflow. By default, it uses `ubuntu-latest`.
 
 It also requires the following secrets:
 

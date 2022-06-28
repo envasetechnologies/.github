@@ -1,6 +1,11 @@
 on:
   workflow_call:
     inputs:
+      runner:
+        description: Runner to use.
+        required: false
+        type: string
+        default: ubuntu-latest
       default-shell:
         description: Shell used to run steps.
         required: false
@@ -11,6 +16,11 @@ on:
         required: false
         type: string
         default: '["3.7", "3.8", "3.9"]'
+      release-on:
+        description: Specify the runner in which the library is released.
+        required: false
+        type: string
+        default: "3.9"
       has-documentation:
         description: Flag to indicate whether the library contains documentation or not.
         type: boolean
@@ -24,8 +34,8 @@ on:
     
 
 jobs:
-  build-library-job:
-    runs-on: ubuntu-latest
+  verify-library:
+    runs-on: ${{ inputs.runner }}
     strategy:
       fail-fast: false
       matrix:
@@ -56,6 +66,7 @@ jobs:
           default-shell: ${{ inputs.default-shell }}
       - name: Release Library
         uses: envasetechnologies/.github/actions/python/release@v1
+        if: ${{ matrix.python-version == inputs.release-on }}
         env:
           BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
           GIT_USER: ${{ github.actor}}
