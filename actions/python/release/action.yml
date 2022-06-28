@@ -1,0 +1,25 @@
+name: Release
+description: Releases a project.
+inputs:
+  default-shell:
+    description: Default shell in which to run the action.
+    required: false
+    default: bash
+runs:
+  using: composite
+  steps:  
+    - name: Display Branch Name
+      run: echo ${CURRENT_BRANCH}
+      shell: ${{ inputs.default-shell }}
+    - name: Fetch Tags
+      run: git fetch --tags
+      shell: ${{ inputs.default-shell }}
+    - name: Post Release
+      run: bolt post-release
+      shell: ${{ inputs.default-shell }}
+
+# Requires
+# CURRENT_BRANCH
+# GIT CREDENTIALS
+# ART_USER
+# ART_PASSWORD

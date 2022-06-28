@@ -14,6 +14,8 @@ on:
     secrets:
       artifactory-password:
         required: true
+    env:
+      CURRENT_BRANCH: ${{ github.head_ref || github.ref_name }}
 
 jobs:
   build-library-job:
@@ -44,6 +46,10 @@ jobs:
           default-shell: ${{ inputs.default-shell }}
       - name: Build Documentation
         uses: envasetechnologies/.github/actions/python/build-sphinx-docs@v0
+        with:
+          default-shell: ${{ inputs.default-shell }}
+      - name: Release Library
+        uses: envasetechnologies/.github/actions/python/release@v0
         with:
           default-shell: ${{ inputs.default-shell }}
     
