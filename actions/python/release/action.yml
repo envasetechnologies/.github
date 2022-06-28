@@ -17,9 +17,3 @@ runs:
     - name: Post Release
       run: bolt post-release
       shell: ${{ inputs.default-shell }}
-
-# Requires
-# CURRENT_BRANCH
-# GIT CREDENTIALS
-# ART_USER
-# ART_PASSWORD
