@@ -39,7 +39,6 @@ jobs:
       - name: Install Requirements
         uses: envasetechnologies/.github/actions/python/install-requirements@v1
         with:
-          requirements-file: requirements.txt
           index-url: https://admin:${{ secrets.artifactory-password }}@profittools.jfrog.io/profittools/api/pypi/pypi/simple
           default-shell: ${{ inputs.default-shell }}
       - name: Run Unit Tests
