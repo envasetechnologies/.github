@@ -66,4 +66,5 @@ jobs:
         if: failure()
         with:
           webhook_url: ${{ secrets.msteams-webhook }}
+          overwrite: "{title: `${github.repository} build failed at ${github.ref_name}`}"
     
