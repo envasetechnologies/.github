@@ -35,26 +35,26 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install Requirements
-        uses: envasetechnologies/.github/actions/python/install-requirements@v0
+        uses: envasetechnologies/.github/actions/python/install-requirements@v1
         with:
           requirements-file: requirements.txt
           index-url: https://admin:${{ secrets.artifactory-password }}@profittools.jfrog.io/profittools/api/pypi/pypi/simple
           default-shell: ${{ inputs.default-shell }}
       - name: Run Unit Tests
-        uses: envasetechnologies/.github/actions/python/run-unit-tests@v0
+        uses: envasetechnologies/.github/actions/python/run-unit-tests@v1
         with:
           default-shell: ${{ inputs.default-shell }}
       - name: Build Library
-        uses: envasetechnologies/.github/actions/python/build-library@v0
+        uses: envasetechnologies/.github/actions/python/build-library@v1
         with: 
           default-shell: ${{ inputs.default-shell }}
       - name: Build Documentation
         if: inputs.has-documentation
-        uses: envasetechnologies/.github/actions/python/build-sphinx-docs@v0
+        uses: envasetechnologies/.github/actions/python/build-sphinx-docs@v1
         with:
           default-shell: ${{ inputs.default-shell }}
       - name: Release Library
-        uses: envasetechnologies/.github/actions/python/release@v0
+        uses: envasetechnologies/.github/actions/python/release@v1
         env:
           CURRENT_BRANCH: ${{ github.head_ref || github.ref_name }}
         with:
