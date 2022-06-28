@@ -58,6 +58,7 @@ jobs:
         uses: envasetechnologies/.github/actions/python/release@v1
         env:
           BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+          GIT_USER: ${{ github.actor}}
         with:
           default-shell: ${{ inputs.default-shell }}
       - name: Notify on Failure
