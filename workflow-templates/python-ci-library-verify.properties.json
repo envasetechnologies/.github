@@ -1,0 +1,7 @@
+{
+    "name": "Verify Python Envase Library",
+    "description": "Verify and test a Python library created by Envase",
+    "categories": [
+        "Python"
+    ]
+}
