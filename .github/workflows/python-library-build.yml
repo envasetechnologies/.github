@@ -57,7 +57,7 @@ jobs:
       - name: Release Library
         uses: envasetechnologies/.github/actions/python/release@v1
         env:
-          CURRENT_BRANCH: ${{ github.head_ref || github.ref_name }}
+          BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
         with:
           default-shell: ${{ inputs.default-shell }}
       - name: Notify on Failure

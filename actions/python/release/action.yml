@@ -9,7 +9,7 @@ runs:
   using: composite
   steps:  
     - name: Display Branch Name
-      run: echo ${CURRENT_BRANCH}
+      run: echo ${BRANCH_NAME}
       shell: ${{ inputs.default-shell }}
     - name: Fetch Tags
       run: git fetch --tags
