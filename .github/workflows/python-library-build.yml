@@ -26,11 +26,20 @@ on:
         type: boolean
         required: false
         default: true
+      aws-default-region:
+        required: false
+        type: string
+        default: "us-east-1"
     secrets:
       artifactory-password:
         required: true
       msteams-webhook:
         required: true
+      aws-access-key-id:
+        required: false
+      aws-secret-access-key:
+        required: false
+      
     
 
 jobs:
@@ -72,6 +81,9 @@ jobs:
           GIT_USER: ${{ github.actor}}
           ART_USER: admin
           ART_PASSWORD: ${{ secrets.artifactory-password }}
+          AWS_DEFAULT_REGION: ${{ inputs.aws-default-region }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.aws-access-key-id }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.aws-secret-access-key }}
         with:
           default-shell: ${{ inputs.default-shell }}
       - name: Notify on Failure
