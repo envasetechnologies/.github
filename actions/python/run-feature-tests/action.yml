@@ -1,0 +1,13 @@
+name: Run Feature Tests
+description: Executes the feature tests generation results.
+inputs:
+  default-shell:
+    description: Default shell in which to run the action.
+    required: false
+    default: bash
+runs:
+  using: composite
+  steps:
+    - name: Execute Unit Tests
+      run: bolt ftci
+      shell: ${{ inputs.default-shell }}

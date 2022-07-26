@@ -5,6 +5,10 @@ inputs:
     description: Default shell in which to run the action.
     required: false
     default: bash
+  release-task:
+    description: Bolt task that executes the commands to released.
+    required: false
+    default: "post-release"
 runs:
   using: composite
   steps:  
@@ -15,5 +19,5 @@ runs:
       run: git fetch --tags
       shell: ${{ inputs.default-shell }}
     - name: Post Release
-      run: bolt post-release
+      run: bolt ${{ inputs.release-task }}
       shell: ${{ inputs.default-shell }}
