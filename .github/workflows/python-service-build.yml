@@ -75,7 +75,6 @@ jobs:
           default-shell: ${{ inputs.default-shell }}
       - name: Release Service
         uses: envasetechnologies/.github/actions/python/release@v1
-        if: ${{ matrix.python-version == inputs.release-on }}
         env:
           BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
           GIT_USER: ${{ github.actor}}
