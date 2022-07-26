@@ -86,7 +86,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.aws-secret-access-key }}
         with:
           default-shell: ${{ inputs.default-shell }}
-          release-task: ${{ intputs.release-task }}
+          release-task: ${{ inputs.release-task }}
       - name: Notify on Failure
         uses: skitionek/notify-microsoft-teams@master
         if: failure()
