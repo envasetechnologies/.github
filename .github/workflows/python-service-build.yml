@@ -43,6 +43,18 @@ on:
         required: false
       aws-secret-access-key:
         required: false
+      envase-service-account-client-id-dev:
+        required: false
+      envase-service-account-client-secret-dev:
+        required: false
+      envase-service-account-client-id-stg:
+        required: false
+      envase-service-account-client-secret-stg:
+        required: false
+      envase-service-account-client-id-prd:
+        required: false
+      envase-service-account-client-secret-prd:
+        required: false
       
     
 
@@ -83,6 +95,12 @@ jobs:
           AWS_DEFAULT_REGION: ${{ inputs.aws-default-region }}
           AWS_ACCESS_KEY_ID: ${{ secrets.aws-access-key-id }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.aws-secret-access-key }}
+          ENVASE_SERVICE_ACCOUNT_CLIENT_ID_DEV: ${{ secrets.envase-service-account-client-id-dev }}
+          ENVASE_SERVICE_ACCOUNT_CLIENT_ID_STG: ${{ secrets.envase-service-account-client-id-stg }}
+          ENVASE_SERVICE_ACCOUNT_CLIENT_ID_PRD: ${{ secrets.envase-service-account-client-id-prd }}
+          ENVASE_SERVICE_ACCOUNT_CLIENT_SECRET_DEV: ${{ secrets.envase-service-account-client-secret-dev }}
+          ENVASE_SERVICE_ACCOUNT_CLIENT_SECRET_STG: ${{ secrets.envase-service-account-client-secret-stg }}
+          ENVASE_SERVICE_ACCOUNT_CLIENT_SECRET_PRD: ${{ secrets.envase-service-account-client-secret-prd }}
         with:
           default-shell: ${{ inputs.default-shell }}
           release-task: ${{ inputs.release-task }}
