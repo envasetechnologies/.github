@@ -15,10 +15,10 @@ runs:
     - name: Display Branch Name
       run: echo ${BRANCH_NAME}
       shell: ${{ inputs.default-shell }}
-    # - name: Fetch Tags
-    #   if: ${{ inputs.fetch-tags }}
-    #   run: git fetch --tags
-    #   shell: ${{ inputs.default-shell }}
+    - name: Fetch Tags
+      if: ${{ inputs.fetch-tags }}
+      run: git fetch --tags
+      shell: ${{ inputs.default-shell }}
     - name: Post Release
       run: bolt ${{ inputs.release-task }}
       shell: ${{ inputs.default-shell }}
