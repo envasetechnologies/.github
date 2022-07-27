@@ -34,6 +34,10 @@ on:
         required: false
         type: string
         default: "post-release"
+      fetch-tags:
+        required: false
+        type: boolean
+        default: true
     secrets:
       artifactory-password:
         required: true
@@ -104,6 +108,7 @@ jobs:
         with:
           default-shell: ${{ inputs.default-shell }}
           release-task: ${{ inputs.release-task }}
+          fetch-tags: ${{ inputs.fetch-tags }}
       - name: Notify on Failure
         uses: skitionek/notify-microsoft-teams@master
         if: failure()

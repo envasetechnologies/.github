@@ -9,6 +9,9 @@ inputs:
     description: Bolt task that executes the commands to released.
     required: false
     default: "post-release"
+  fetch-tags:
+    description: Fetch existing tags from origin
+    required: true
 runs:
   using: composite
   steps:  
@@ -16,6 +19,7 @@ runs:
       run: echo ${BRANCH_NAME}
       shell: ${{ inputs.default-shell }}
     - name: Fetch Tags
+      if: ${{ inputs.fetch-tags }}
       run: git fetch --tags
       shell: ${{ inputs.default-shell }}
     - name: Post Release
