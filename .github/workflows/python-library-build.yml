@@ -39,8 +39,6 @@ on:
         required: false
       aws-secret-access-key:
         required: false
-      
-    
 
 jobs:
   verify-library:
