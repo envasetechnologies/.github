@@ -16,7 +16,6 @@ runs:
       run: echo ${BRANCH_NAME}
       shell: ${{ inputs.default-shell }}
     - name: Fetch Tags
-      if: ${{ inputs.fetch-tags }}
       run: git fetch --tags
       shell: ${{ inputs.default-shell }}
     - name: Post Release
