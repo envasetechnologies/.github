@@ -25,5 +25,5 @@ runs:
     - name: Install Requirements
       uses: envasetechnologies/.github/actions/python/install-requirements@v1
       with:
-        index-url: https://admin:${{ secrets.artifactory-password }}@profittools.jfrog.io/profittools/api/pypi/pypi/simple
+        index-url: https://admin:${{ env.ART_PASSWORD }}@profittools.jfrog.io/profittools/api/pypi/pypi/simple
         default-shell: ${{ inputs.default-shell }}
