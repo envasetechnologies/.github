@@ -55,9 +55,6 @@ on:
         required: false
       envase-service-account-client-secret-prd:
         required: false
-      
-    
-
 jobs:
   build-service:
     runs-on: ${{ inputs.runner }}

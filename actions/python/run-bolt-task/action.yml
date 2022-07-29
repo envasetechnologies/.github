@@ -1,0 +1,21 @@
+name: Run Bolt Task
+description: Runs the specified bolt task. Requires bolt installed and setup.
+inputs:
+
+  default-shell:
+    description: Shell used to run steps.
+    required: false
+    default: bash
+
+  task-name:
+    description: Name of the bolt task to executes
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - run: echo "Executing ${{ inputs.task-name }}"
+      shell: ${{ inputs.default-shell }}
+
+    - run: bolt ${{ inputs.task-name }}
+      shell: ${{ inputs.default-shell }}

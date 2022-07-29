@@ -1,0 +1,20 @@
+name: Verify Application
+description: Runs unit and feature tests for a service or application.
+inputs:
+
+  default-shell:
+    description: Shell used to run steps.
+    required: false
+    default: bash
+
+runs:
+  using: composite
+  steps:
+    - name: Run Unit Tests
+      uses: envasetechnologies/.github/actions/python/run-unit-tests@v1
+      with:
+        default-shell: ${{ inputs.default-shell }}
+    - name: Run Feature Tests
+      uses: envasetechnologies/.github/actions/python/run-feature-tests@v1
+      with:
+        default-shell: ${{ inputs.default-shell }}
