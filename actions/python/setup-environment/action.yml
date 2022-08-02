@@ -12,6 +12,11 @@ inputs:
     required: false
     default: "3.9"
 
+  requirements-file:
+    description: File containing the requirements to install.
+    required: false
+    default: requirements-dev.txt
+
 runs:
   using: composite
   steps:
@@ -27,3 +32,4 @@ runs:
       with:
         index-url: https://admin:${{ env.ART_PASSWORD }}@profittools.jfrog.io/profittools/api/pypi/pypi/simple
         default-shell: ${{ inputs.default-shell }}
+        requirements-file: ${{ inputs.requirements-file }}
