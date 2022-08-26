@@ -35,4 +35,5 @@ runs:
 
     - name: Verify Serverless Spec
       run: serverless print --stage ${{ inputs.stage }}
+      shell: ${{ inputs.default-shell }}
 

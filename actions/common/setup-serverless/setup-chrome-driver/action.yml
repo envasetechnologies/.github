@@ -1,0 +1,41 @@
+name: Setup Chrome Web-Driver
+description: Installs Serverless Framework to deploy project
+inputs:
+
+  chromedriver-url:
+    description: Dowload URL for chrome driver.
+    required: false
+    default: https://chromedriver.storage.googleapis.com/2.37/chromedriver_linux64.zip
+
+  headless-chromium-url:
+    description: Download URL for headless chromium. 
+    required: false
+    default: https://github.com/adieuadieu/serverless-chrome/releases/download/v1.0.0-41/stable-headless-chromium-amazonlinux-2017-03.zip
+
+  default-shell:
+    description: Shell used to run steps.
+    required: false
+    default: bash
+
+runs:
+  using: composite
+  steps:
+    - name: Download Chrome Driver
+      run: curl -SL ${{ inputs.chromedriver-url }} > chromedriver.zip
+      shell: ${{ inputs.default-shell }}
+    
+    - name: Extract Chrome Driver 
+      run: unzip chromedriver.zip -d /opt
+      shell: ${{ inputs.default-shell }}
+    
+    - name: Download Chromium 
+      run: curl -SL ${{ inputs.headless-chromium-url }} > headless-chromium.zip
+      shell: ${{ inputs.default-shell }}
+
+    - name: Extract Chromium 
+      run: unzip headless-chromium.zip -d /opt
+      shell: ${{ inputs.default-shell }}
+
+    - name: Clean-Up Downloads
+      run: rm chromedriver.zip headless-chromium.zip
+      shell: ${{ inputs.default-shell }}
