@@ -23,7 +23,6 @@ runs:
     - uses: actions/setup-node@v3
       with:
         node-version: ${{ inputs.node-version }}
-        cache: 'npm'
 
     - name: Install Yarn
       run: apt-get update && apt-get install -yqq yarn
