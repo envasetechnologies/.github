@@ -24,8 +24,12 @@ runs:
       with:
         node-version: ${{ inputs.node-version }}
 
+    - name: Apt-Get Update
+      run: sudo apt-get update
+      shell: ${{ inputs.default-shell }}
+
     - name: Install Yarn
-      run: apt-get update && apt-get install -yqq yarn
+      run: sudo apt-get install -yqq yarn
       shell: ${{ inputs.default-shell }}
 
     - name: Install Serverless Requirements
