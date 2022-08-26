@@ -32,7 +32,11 @@ runs:
       run: sudo apt-get install -yqq yarn
       shell: ${{ inputs.default-shell }}
 
-    - name: Install Serverless Requirements
+    - name: Install Serverless
+      run: sudo yarn global add serverless
+      shell: ${{ inputs.default-shell }}
+
+    - name: Installing Dependencies
       run: yarn install
       shell: ${{ inputs.default-shell }}
 
