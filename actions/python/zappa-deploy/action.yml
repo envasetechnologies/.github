@@ -20,6 +20,9 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: Fetch Repo Tags
+      run: git fetch --tags
+      shell: ${{ inputs.default-shell }}
     - name: Create Virtual Environment
       run: |
         python -m venv deployment
