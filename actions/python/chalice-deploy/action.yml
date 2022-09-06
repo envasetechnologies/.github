@@ -20,7 +20,7 @@ inputs:
 runs:
   using: composite
   steps:
-    - uses: hashicorp/setup-terraform@v2
+    - uses: unfor19/install-aws-cli-action@v1.0.3
       with:
         terraform_version: ${{ inputs.terraform-version }}
     
