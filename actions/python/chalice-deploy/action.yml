@@ -1,0 +1,29 @@
+name: Deploy Chalice Application
+description: Deploys a Chalice based Application
+inputs:
+
+  terraform-version:
+    description: Version of Terraform to install.
+    required: false
+    default: "1.1.9"
+
+  release-task:
+    description: Bolt task that executes the commands to released.
+    required: false
+    default: "post-release"
+  
+  default-shell:
+    description: Shell used to run steps.
+    required: false
+    default: bash
+
+runs:
+  using: composite
+  steps:
+    - uses: hashicorp/setup-terraform@2
+      with:
+        terraform_version: ${{ inputs.terraform-version }}
+    
+    - name: Deploy Chalice Application
+      run: bolt ${{ inputs.release-task }}
+      shell: ${{ inputs.default-shell }}
