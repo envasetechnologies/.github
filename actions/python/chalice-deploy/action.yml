@@ -21,7 +21,7 @@ runs:
   using: composite
   steps:
     - name: Install AWS CLI
-      run: ptyhon -m pip install awscli
+      run: python -m pip install awscli
       shell: ${{ inputs.default-shell }}
     
     - name: Deploy Chalice Application
