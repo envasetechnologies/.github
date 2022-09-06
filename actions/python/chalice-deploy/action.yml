@@ -20,7 +20,9 @@ inputs:
 runs:
   using: composite
   steps:
-    - uses: unfor19/install-aws-cli-action@v1.0.3
+    - name: Install AWS CLI
+      run: ptyhon -m pip install awscli
+      shell: ${{ inputs.default-shell }}
     
     - name: Deploy Chalice Application
       run: bolt ${{ inputs.release-task }}
