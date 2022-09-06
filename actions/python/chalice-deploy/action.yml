@@ -21,8 +21,6 @@ runs:
   using: composite
   steps:
     - uses: unfor19/install-aws-cli-action@v1.0.3
-      with:
-        terraform_version: ${{ inputs.terraform-version }}
     
     - name: Deploy Chalice Application
       run: bolt ${{ inputs.release-task }}
