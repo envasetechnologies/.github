@@ -33,6 +33,10 @@ runs:
       run: python --version
       shell: ${{ inputs.default-shell }}
 
+    - name: Upgrade pip
+      run: python -m pip install --upgrade pip
+      shell: ${{ inputs.default-shell }}
+
     - name: Install Requirements PyPI
       run: python -m pip install -r ${{ inputs.requirements-file }}
       if: ${{ inputs.index-url == 'PyPI' }}

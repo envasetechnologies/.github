@@ -1,0 +1,21 @@
+name: Verify Windows application
+description: Runs unit and feature tests for the application.
+
+inputs:
+
+  default-shell:
+    description: Shell used to run steps.
+    required: false
+    default: pwsh
+
+runs:
+  using: composite
+  steps:
+    - name: Run Unit Tests
+      run: bolt cov
+      shell: ${{ inputs.default-shell }}
+
+    - name: Run Feature Tests
+      run: bolt ftci
+      shell: ${{ inputs.default-shell }}
+      
