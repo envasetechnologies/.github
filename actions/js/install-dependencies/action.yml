@@ -1,0 +1,18 @@
+name: Install Dependencies
+description: Installs requirements based on the specified requirements file.
+inputs:
+  requirements-file:
+    description: File containing the dependencies to install, default is package.lock.json.
+    required: true
+    default: package.lock.json
+  default-shell:
+    description: Default shell in which to run the action.
+    required: false
+    default: bash
+runs:
+  using: "composite"
+  steps:  
+    - name: Save Installed Dependencies
+      run: npm ci
+      shell: ${{ inputs.default-shell }}
+    
