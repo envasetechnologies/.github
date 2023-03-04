@@ -9,20 +9,10 @@ inputs:
     description: Default shell in which to run the action.
     required: false
     default: bash
-  node-versoin:
-    required: false
-    default: 16.x
 
 runs:
   using: "composite"
-  steps:
-    - name: Use Node.js ${{ inputs.node-version }}
-      uses: actions/setup-node@v3
-      shell: ${{ inputs.default-shell }}
-      with:
-        node-version: ${{ inputs.node-version }}
-    - run: npm ci
-    
+  steps:  
     - name: serverless deploy
       uses: serverless/github-action@v3.1
       with:
