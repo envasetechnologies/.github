@@ -20,14 +20,11 @@ inputs:
 runs:
   using: composite
   steps:
-    - uses: actions/checkout@v3
-    
-    - name: Use Node.js ${{ inputs.node-version }}
-      uses: actions/setup-node@v3
-      shell: ${{ inputs.default-shell }}
-      with:
-        node-version: ${{ inputs.node-version }}
-    - run: npm ci
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Install Node and Serverless
+      uses: envasetechnologies/.github/actions/common/setup-serverless@v1
 
     - name: Install Dependencies
       uses: envasetechnologies/.github/actions/js/install-dependencies@v1

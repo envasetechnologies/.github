@@ -40,7 +40,7 @@ runs:
       run: yarn install
       shell: ${{ inputs.default-shell }}
 
-    - name: Verify Serverless Spec
+    - name: Verify Serverless Specn
       run: serverless print --stage ${{ inputs.stage }}
       shell: ${{ inputs.default-shell }}
 
