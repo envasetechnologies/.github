@@ -1,0 +1,36 @@
+name: Setup Environment
+description: Installs Node and sets up the dependencies.
+inputs:
+
+  default-shell:
+    description: Shell used to run steps.
+    required: false
+    default: bash
+
+  node-version:
+    description: Version of Node to use.
+    required: false
+    default: "16.x"
+
+  dependencies-file:
+    description: File containing the dependecies to install.
+    required: false
+    default: package.lock.json
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/checkout@v3
+    
+    - name: Use Node.js ${{ inputs.node-version }}
+      uses: actions/setup-node@v3
+      shell: ${{ inputs.default-shell }}
+      with:
+        node-version: ${{ inputs.node-version }}
+    - run: npm ci
+
+    - name: Install Dependencies
+      uses: envasetechnologies/.github/actions/js/install-dependencies@v1
+      with:
+        default-shell: ${{ inputs.default-shell }}
+        dependencies-file: ${{ inputs.dependencies-file }}
