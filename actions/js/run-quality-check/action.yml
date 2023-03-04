@@ -14,9 +14,9 @@ runs:
       uses: actions/checkout@v3
 
     - name: Install Dependencies Run Lint and Test Coverage
-      shell:
+      shell: ${{ inputs.default-shell }}
       run: |
         echo "//npm.pkg.github.com/:_authToken=${{ secrets.GPR_TOKEN }}" >> .npmrc
         npm install
         npm run lint
-        npm test-coverage
+        npm run test-coverage
