@@ -1,7 +1,7 @@
 name: Install Dependencies
-description: Installs requirements based on the specified requirements file.
+description: Installs dependencies based on the specified dependencies file.
 inputs:
-  requirements-file:
+  dependencies-file:
     description: File containing the dependencies to install, default is package.lock.json.
     required: true
     default: package.lock.json
@@ -12,7 +12,7 @@ inputs:
 runs:
   using: "composite"
   steps:  
-    - name: Save Installed Dependencies
+    - name: Install Dependencies
       run: npm ci
       shell: ${{ inputs.default-shell }}
     
