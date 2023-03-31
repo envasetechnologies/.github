@@ -1,0 +1,31 @@
+name: Docker build and push to ECR
+description: builds docker images, tags it with application version, and pushes to AWS ECR
+inputs:
+
+  default-shell:
+    description: Shell used to run steps.
+    required: false
+    default: bash
+
+  tag:
+    description: Tag used when tagging docker image
+    required: true
+
+  ecr-uri:
+    description: uri of the ECR repositiory you want your image pushed to e.g.518892363268.dkr.ecr.us-east-1.amazonaws.com/envase-connect-build-agent.
+    required: true
+
+runs:
+  using: composite
+  steps:
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-image
+        shell: ${{inputs.default-shell}}
+        env:
+          IMAGE_TAG: ${{ inputs.tag }}
+        run: |
+          docker build -t ${{inputs.ecr-uri}}:$IMAGE_TAG .
+          docker push ${{inputs.ecr-uri}} --all-tags
+          echo "image=${{inputs.ecr-uri}}:$IMAGE_TAG" >> $GITHUB_OUTPUT
+
+

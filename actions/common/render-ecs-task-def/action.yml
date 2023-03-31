@@ -1,0 +1,33 @@
+name: Render ECS Task Definition
+description: takes in ecs task definition and updated the image
+inputs:
+
+  default-shell:
+    description: Shell used to run steps.
+    required: false
+    default: bash
+
+  task-def-path:
+    description: relative path to your ecs task definition file.
+    required: true
+
+  image:
+    description: docker image e.g. 518892363268.dkr.ecr.us-east-1.amazonaws.com/your-application:1.3.2.
+    required: true
+
+  environment-variables:
+    description: string of environment variables that will be rendered into your task def.
+    required: false
+
+runs:
+  using: composite
+  steps:
+    - name: Fill in the new image ID in the Amazon ECS task definition
+      id: task-def
+      uses: aws-actions/amazon-ecs-render-task-definition@v1
+      shell: ${{inputs.default-shell}}
+      with:
+        image: ${{ inputs.image }}
+        task-definition: ${{ inputs.task-def-path }}
+        container-name: ${{ inputs.container-name }}
+        environment-variables: ${{ inputs.environment-variables }}
