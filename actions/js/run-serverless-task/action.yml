@@ -5,7 +5,7 @@ inputs:
     description: Serverless action you want to run, default is deploy.
     required: false
     default: deploy
-  stage: 
+  stage:
     description: Serverless stage you want to run action against, default is test.
     required: false
     default: test
@@ -17,6 +17,7 @@ inputs:
 
 runs:
   using: "composite"
-  steps:  
-    - name: serverless ${{inputs.serverless-action}} 
-     run: serverless ${{inputs.serverless-action}} --stage ${{inputs.stage}}
+  steps:
+    - name: serverless ${{inputs.serverless-action}}
+      shell: ${{ inputs.default-shell }}
+      run: serverless ${{inputs.serverless-action}} --stage ${{inputs.stage}}
