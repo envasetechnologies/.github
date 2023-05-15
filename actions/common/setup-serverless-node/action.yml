@@ -17,6 +17,10 @@ inputs:
     required: false
     default: stg
 
+  stream-ts:
+    description: Log stream for cloudwatch
+    required: true
+
 runs:
   using: composite
   steps:
@@ -26,6 +30,10 @@ runs:
         registry-url: https://npm.pkg.github.com
         scope: '@envasetechnologies'
 
+    - name: set APP_VERSION
+      run: export APP_VERSION=$npm_package_version
+      shell: ${{ inputs.default-shell }}
+
     - name: Install Serverless
       run: npm i -g serverless
       shell: ${{ inputs.default-shell }}
@@ -33,4 +41,6 @@ runs:
     - name: Verify Serverless Stage
       run: serverless print --stage ${{ inputs.stage }}
       shell: ${{ inputs.default-shell }}
+      env:
+        STREAM-TS: ${{ inputs.stream-ts }}
 
