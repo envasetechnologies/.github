@@ -21,6 +21,10 @@ inputs:
     description: Token to access private packages during install
     required: false
 
+  stream-ts:
+    description: Log stream for cloudwatch
+    required: true
+
 runs:
   using: composite
   steps:
@@ -29,6 +33,9 @@ runs:
 
     - name: Install Node and Serverless
       uses: envasetechnologies/.github/actions/common/setup-serverless-node@v1
+      with:
+        stream-ts: ${{ inputs.stream-ts }}
+        stage: ${{ inputs.stage }}
 
     - name: Install Dependencies
       uses: envasetechnologies/.github/actions/js/install-dependencies@v1
@@ -36,3 +43,4 @@ runs:
         default-shell: ${{ inputs.default-shell }}
         dependencies-file: ${{ inputs.dependencies-file }}
         install-token: ${{ inputs.install-token}}
+

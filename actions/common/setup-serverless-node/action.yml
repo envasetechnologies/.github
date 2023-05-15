@@ -30,8 +30,8 @@ runs:
         registry-url: https://npm.pkg.github.com
         scope: '@envasetechnologies'
 
-    - name: set APP_VERSION
-      run: export APP_VERSION=$npm_package_version
+    - name: set env vars
+      run: APP_VERSION=$npm_package_version && echo "APP_VERSION=${APP_VERSION}" >> $GITHUB_ENV && STREAM_TS=${{inputs.stream-ts}} && echo "STREAM_TS=${STREAM_TS}" >> $GITHUB_ENV
       shell: ${{ inputs.default-shell }}
 
     - name: Install Serverless
