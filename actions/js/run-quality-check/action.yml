@@ -16,7 +16,7 @@ runs:
     - name: Install Dependencies Run Lint and Test Coverage
       shell: ${{ inputs.default-shell }}
       run: |
-        echo "//npm.pkg.github.com/:_authToken=${{ secrets.GPR_TOKEN }}" >> .npmrc
+        echo "//npm.pkg.github.com/:_authToken=${{ secrets.ENVASE_CONNECT_GPR_TOKEN }}" >> .npmrc
         npm install
         npm run lint
         npm run test-coverage

@@ -1,0 +1,36 @@
+name: Setup Serverless Framework
+description: Installs Serverless Framework to deploy project
+inputs:
+
+  default-shell:
+    description: Shell used to run steps.
+    required: false
+    default: bash
+
+  node-version:
+    description: Version of Node to use.
+    required: false
+    default: "18"
+
+  stage:
+    description: Stage to test serverless spec.
+    required: false
+    default: stg
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v3
+      with:
+        node-version: ${{ inputs.node-version }}
+        registry-url: https://npm.pkg.github.com
+        scope: '@envasetechnologies'
+
+    - name: Install Serverless
+      run: npm i -g serverless
+      shell: ${{ inputs.default-shell }}
+
+    - name: Verify Serverless Stage
+      run: serverless print --stage ${{ inputs.stage }}
+      shell: ${{ inputs.default-shell }}
+

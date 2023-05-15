@@ -10,12 +10,16 @@ inputs:
   node-version:
     description: Version of Node to use.
     required: false
-    default: "16.x"
+    default: "18"
 
   dependencies-file:
-    description: File containing the dependecies to install.
+    description: File containing the dependencies to install.
     required: false
     default: package.lock.json
+
+  install-token:
+    description: Token to access private packages during install
+    required: false
 
 runs:
   using: composite
@@ -24,10 +28,11 @@ runs:
       uses: actions/checkout@v3
 
     - name: Install Node and Serverless
-      uses: envasetechnologies/.github/actions/common/setup-serverless@v1
+      uses: envasetechnologies/.github/actions/common/setup-serverless-node@v1
 
     - name: Install Dependencies
       uses: envasetechnologies/.github/actions/js/install-dependencies@v1
       with:
         default-shell: ${{ inputs.default-shell }}
         dependencies-file: ${{ inputs.dependencies-file }}
+        install-token: ${{ inputs.install-token}}
