@@ -25,6 +25,12 @@ inputs:
     description: Log stream for cloudwatch
     required: true
 
+  stage:
+    description: Stage to test serverless spec.
+    required: false
+    default: test
+
+
 runs:
   using: composite
   steps:
