@@ -31,7 +31,7 @@ runs:
         scope: '@envasetechnologies'
 
     - name: set env vars
-      run: APP_VERSION=$(node -pe \"require('./package.json').version\") && echo "APP_VERSION=${APP_VERSION}" >> $GITHUB_ENV && STREAM_TS=${{inputs.stream-ts}} && echo "STREAM_TS=${STREAM_TS}" >> $GITHUB_ENV
+      run: APP_VERSION=$(cat ${PACKAGE_JSON_PATH}/package.json | jq '.version' | tr -d '"') && echo "APP_VERSION=${APP_VERSION}" >> $GITHUB_ENV && STREAM_TS=${{inputs.stream-ts}} && echo "STREAM_TS=${STREAM_TS}" >> $GITHUB_ENV
       shell: ${{ inputs.default-shell }}
 
     - name: Install Serverless
