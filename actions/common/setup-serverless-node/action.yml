@@ -31,7 +31,7 @@ runs:
         scope: '@envasetechnologies'
 
     - name: set env vars
-      run: APP_VERSION=$npm_package_version && echo "APP_VERSION=${APP_VERSION}" >> $GITHUB_ENV && STREAM_TS=${{inputs.stream-ts}} && echo "STREAM_TS=${STREAM_TS}" >> $GITHUB_ENV
+      run: APP_VERSION=$(node -pe \"require('./package.json').version\") && echo "APP_VERSION=${APP_VERSION}" >> $GITHUB_ENV && STREAM_TS=${{inputs.stream-ts}} && echo "STREAM_TS=${STREAM_TS}" >> $GITHUB_ENV
       shell: ${{ inputs.default-shell }}
 
     - name: Install Serverless
@@ -39,7 +39,7 @@ runs:
       shell: ${{ inputs.default-shell }}
 
     - name: Verify Serverless Stage
-      run: serverless print --stage ${{ inputs.stage }}
+      run: serverless print --stage ${{ inputs.stage }} --verbose
       shell: ${{ inputs.default-shell }}
       env:
         STREAM-TS: ${{ inputs.stream-ts }}
