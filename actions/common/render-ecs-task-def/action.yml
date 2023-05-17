@@ -33,6 +33,8 @@ runs:
         # Determine dev or prod env & set jq path
         JQ_PATH=$(which jq)
 
+        echo "---------- $SECRET_ID -------------"
+
         output=$(aws secretsmanager get-secret-value --secret-id $SECRET_ID --output text)
         splitOutput=( $output )
         secretArn=${splitOutput[0]}
