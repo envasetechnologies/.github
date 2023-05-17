@@ -58,11 +58,15 @@ runs:
 
           if [ ${{inputs.install-token}} ]; then
             echo ---------- Using install token ----------
-            docker build -t ${{inputs.ecr-uri}}:$APP_VERSION --build-arg ENVASE_CONNECT_GPR_TOKEN=${{inputs.install-token}} .
+            docker build -t ${{inputs.ecr-uri}} --build-arg ENVASE_CONNECT_GPR_TOKEN=${{inputs.install-token}} .
           else
-            docker build -t ${{inputs.ecr-uri}}:$APP_VERSION .
+            docker build -t ${{inputs.ecr-uri}} .
           fi
-          docker push ${{inputs.ecr-uri}} --all-tags
+
+          docker tag $APP_NAME:latest 518892363268.dkr.ecr.us-east-1.amazonaws.com/$APP_NAME:latest
+          docker tag $APP_NAME:latest 518892363268.dkr.ecr.us-east-1.amazonaws.com/$APP_NAME:$APP_VERSION
+
+          docker push ${{inputs.ecr-uri}} -a
           echo "image=${{inputs.ecr-uri}}:$APP_VERSION" >> $GITHUB_OUTPUT
 
 
