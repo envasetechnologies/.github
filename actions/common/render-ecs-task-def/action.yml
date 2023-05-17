@@ -27,7 +27,7 @@ runs:
       run: |
         # install deps
 
-        sudo apt-get install which jq unzip
+        sudo apt-get install jq unzip
         curl -sSL https://git.io/get-mo -o mo
         chmod +x ./mo
 
