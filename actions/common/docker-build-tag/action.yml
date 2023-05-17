@@ -58,9 +58,9 @@ runs:
 
           if [ ${{inputs.install-token}} ]; then
             echo ---------- Using install token ----------
-            docker build -t ${{inputs.ecr-uri}} --build-arg ENVASE_CONNECT_GPR_TOKEN=${{inputs.install-token}} .
+            docker build -t $APP_NAME --build-arg ENVASE_CONNECT_GPR_TOKEN=${{inputs.install-token}} .
           else
-            docker build -t ${{inputs.ecr-uri}} .
+            docker build -t $APP_NAME .
           fi
 
           docker tag $APP_NAME:latest ${{inputs.ecr-uri}}:latest
