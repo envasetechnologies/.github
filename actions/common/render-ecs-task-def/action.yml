@@ -29,7 +29,6 @@ runs:
         curl -sSL https://raw.githubusercontent.com/tests-always-included/mo/master/mo -o mo
         chmod +x mo
         sudo mv mo /usr/local/bin/
-        curl -SL https://raw.githubusercontent.com/tests-always-included/mo/master/mo -o mo
 
         SECRET_ID="$APP_NAME/$ENVIRONMENT"
         # Determine dev or prod env & set jq path
@@ -78,6 +77,8 @@ runs:
         fi
 
         echo "Task definition created"
+        ls -la
+        cat task-definition.json
 
 
     - name: Fill in the new image ID in the Amazon ECS task definition
