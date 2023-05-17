@@ -81,12 +81,12 @@ runs:
         cat task-definition.json
 
 
-    - name: Fill in the new image ID in the Amazon ECS task definition
-      id: task-def
-      uses: aws-actions/amazon-ecs-render-task-definition@v1
-      with:
-        image: ${{ inputs.image }}
-        task-definition: ${{ inputs.task-def-path }}
-        # container-name: ${{ inputs.container-name }}
-        container-name: web
-        environment-variables: ${{ inputs.environment-variables }}
+    # - name: Fill in the new image ID in the Amazon ECS task definition
+    #   id: task-def
+    #   uses: aws-actions/amazon-ecs-render-task-definition@v1
+    #   with:
+    #     image: ${{ inputs.image }}
+    #     task-definition: ${{ inputs.task-def-path }}
+    #     # container-name: ${{ inputs.container-name }}
+    #     container-name: web
+    #     environment-variables: ${{ inputs.environment-variables }}

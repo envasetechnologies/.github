@@ -7,13 +7,13 @@ inputs:
     required: false
     default: bash
 
-  # task-def:
-  #   description: relative path to your ecs task definition file.
-  #   required: true
+  task-def:
+    description: relative path to your ecs task definition file.
+    required: true
 
-  # ecs-service:
-  #   description: Name of the ECS service you want to deploy to
-  #   required: true
+  ecs-service:
+    description: Name of the ECS service you want to deploy to
+    required: true
 
   ecs-cluster:
     description: Name of the ECS cluster you want to deploy to.
@@ -22,16 +22,16 @@ inputs:
 runs:
   using: composite
   steps:
-      # - name: deploy
-      #   uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-      #   with:
-      #     task-definition: ${{ inputs.task-def }}
-      #     service: ${{ inputs.ecs-service }}
-      #     cluster: ${{ inputs.ecs-cluster }}
-      #     wait-for-service-stability: true
+      - name: deploy
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ inputs.task-def }}
+          service: ${{ inputs.ecs-service }}
+          cluster: ${{ inputs.ecs-cluster }}
+          wait-for-service-stability: true
 
-        - name: deploy
-          shell: ${{inputs.default-shell}}
-          run: |
-            aws ecs register-task-definition --cli-input-json file://task-definition.json 2>&1 > /dev/null
-            aws ecs update-service --cluster ${{ inputs.ecs-cluster }} --service "$APP_NAME"-"$ENVIRONMENT" --task-definition "$APP_NAME"-"$ENVIRONMENT"
+      # - name: deploy
+      #   shell: ${{inputs.default-shell}}
+      #   run: |
+      #     aws ecs register-task-definition --cli-input-json file://task-definition.json 2>&1 > /dev/null
+      #     aws ecs update-service --cluster ${{ inputs.ecs-cluster }} --service "$APP_NAME"-"$ENVIRONMENT" --task-definition "$APP_NAME"-"$ENVIRONMENT"
