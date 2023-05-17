@@ -7,13 +7,17 @@ inputs:
     required: false
     default: bash
 
-  tag:
-    description: Tag used when tagging docker image
-    required: true
+  # tag:
+  #   description: Tag used when tagging docker image
+  #   required: true
 
   ecr-uri:
-    description: uri of the ECR repositiory you want your image pushed to e.g.518892363268.dkr.ecr.us-east-1.amazonaws.com/envase-connect-build-agent.
+    description: uri of the ECR repository you want your image pushed to e.g. 518892363268.dkr.ecr.us-east-1.amazonaws.com/envase-connect-build-agent
     required: true
+
+  install-token:
+    description: Token to access private packages during install
+    required: false
 
 runs:
   using: composite
@@ -21,11 +25,44 @@ runs:
       - name: Build, tag, and push image to Amazon ECR
         id: build-image
         shell: ${{inputs.default-shell}}
-        env:
-          IMAGE_TAG: ${{ inputs.tag }}
+        # env:
+        #   IMAGE_TAG: ${{ inputs.tag }}
         run: |
-          docker build -t ${{inputs.ecr-uri}}:$IMAGE_TAG .
+          PACKAGE_JSON=./package.json
+          BUILD_GRADLE=./build.gradle
+
+          node_build(){
+            echo  ---------- Node Variation ----------
+            echo Node Version: "$(node -v)"
+            APP_VERSION=$(node -pe "require('./package.json').version")
+            export APP_VERSION
+            echo running build for version $APP_VERSION
+          }
+
+          java_build(){
+              echo ---------- Java Variation ----------
+              echo Java Version: "$(java --version)"
+              chmod +x ./gradlew
+              APP_VERSION=$(./gradlew properties | grep ^version: | tr -d version: | cut -c2-)
+              export APP_VERSION
+          }
+
+          if [ -f "$PACKAGE_JSON" ]; then
+            node_build
+          elif [ -f "$BUILD_GRADLE" ]; then
+            java_build
+          else
+            echo Unsupported language - supported languages are Java and JavaScript/Typescript
+            exit 1
+          fi
+
+          if [ ${{inputs.install-token}} ]; then
+            echo ---------- Using install token ----------
+            docker build -t ${{inputs.ecr-uri}}:$APP_VERSION --build-arg ENVASE_CONNECT_GPR_TOKEN=${{inputs.install-token}} .
+          else
+            docker build -t ${{inputs.ecr-uri}}:$APP_VERSION .
+          fi
           docker push ${{inputs.ecr-uri}} --all-tags
-          echo "image=${{inputs.ecr-uri}}:$IMAGE_TAG" >> $GITHUB_OUTPUT
+          echo "image=${{inputs.ecr-uri}}:$APP_VERSION" >> $GITHUB_OUTPUT
 
 
