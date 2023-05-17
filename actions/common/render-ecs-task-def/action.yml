@@ -26,15 +26,8 @@ runs:
       shell: ${{inputs.default-shell}}
       run: |
         # install deps
-
-        sudo apt-get install jq unzip
         curl -sSL https://git.io/get-mo -o mo
         chmod +x ./mo
-
-        # install aws cli
-        curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-        unzip awscliv2.zip
-        chmod +x ./aws/install && ./aws/install
 
         SECRET_ID="$APP_NAME/$ENVIRONMENT"
         # Determine dev or prod env & set jq path
