@@ -63,7 +63,7 @@ runs:
             docker build -t ${{inputs.ecr-uri}} .
           fi
 
-          docker tag $APP_NAME:latest 518892363268.dkr.ecr.us-east-1.amazonaws.com/$APP_NAME:latest
+          docker tag ${{inputs.ecr-uri}}:latest ${{inputs.ecr-uri}}:latest
 
           echo pushing
           docker push ${{inputs.ecr-uri}} -a
