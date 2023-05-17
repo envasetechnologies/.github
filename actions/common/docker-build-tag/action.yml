@@ -63,7 +63,7 @@ runs:
             docker build -t $APP_NAME .
           fi
 
-          docker tag $APP_NAME:latest ${{inputs.ecr-uri}}:latest
+          docker tag $APP_NAME ${{inputs.ecr-uri}}:$APP_VERSION"
 
           echo pushing
           docker push ${{inputs.ecr-uri}} -a
