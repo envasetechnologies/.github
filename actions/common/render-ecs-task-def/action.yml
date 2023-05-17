@@ -26,8 +26,8 @@ runs:
       shell: ${{inputs.default-shell}}
       run: |
         # install deps
-        su
-        apt-get install which jq unzip
+
+        sudo apt-get install which jq unzip
         curl -sSL https://git.io/get-mo -o mo
         chmod +x ./mo
 
