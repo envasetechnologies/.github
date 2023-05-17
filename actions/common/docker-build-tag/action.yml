@@ -64,7 +64,6 @@ runs:
           fi
 
           docker tag $APP_NAME:latest 518892363268.dkr.ecr.us-east-1.amazonaws.com/$APP_NAME:latest
-          docker tag $APP_NAME:latest 518892363268.dkr.ecr.us-east-1.amazonaws.com/$APP_NAME:$APP_VERSION
 
           docker push ${{inputs.ecr-uri}} -a
           echo "image=${{inputs.ecr-uri}}:$APP_VERSION" >> $GITHUB_OUTPUT
