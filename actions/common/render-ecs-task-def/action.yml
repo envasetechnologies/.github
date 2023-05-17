@@ -26,8 +26,10 @@ runs:
       shell: ${{inputs.default-shell}}
       run: |
         # install deps
-        curl -sSL https://git.io/get-mo -o mo
-        chmod +x ./mo
+        curl -sSL https://raw.githubusercontent.com/tests-always-included/mo/master/mo -o mo
+        chmod +x mo
+        sudo mv mo /usr/local/bin/
+        curl -SL https://raw.githubusercontent.com/tests-always-included/mo/master/mo -o mo
 
         SECRET_ID="$APP_NAME/$ENVIRONMENT"
         # Determine dev or prod env & set jq path
