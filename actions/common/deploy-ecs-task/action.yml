@@ -7,7 +7,7 @@ inputs:
     required: false
     default: bash
 
-  task-def:
+  task-definition:
     description: relative path to your ecs task definition file.
     required: true
 
@@ -25,7 +25,7 @@ runs:
       - name: deploy
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
-          task-definition: ${{ inputs.task-def }}
+          task-definition: ${{ inputs.task-definition }}
           service: ${{ inputs.ecs-service }}
           cluster: ${{ inputs.ecs-cluster }}
           wait-for-service-stability: true
