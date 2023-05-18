@@ -11,13 +11,13 @@ inputs:
     description: relative path to your ecs task definition file.
     required: true
 
-  image:
-    description: docker image e.g. 518892363268.dkr.ecr.us-east-1.amazonaws.com/your-application:1.3.2
-    required: true
+  # image:
+  #   description: docker image e.g. 518892363268.dkr.ecr.us-east-1.amazonaws.com/your-application:1.3.2
+  #   required: true
 
-  environment-variables:
-    description: string of environment variables that will be rendered into your task def.
-    required: false
+  # environment-variables:
+  #   description: string of environment variables that will be rendered into your task def.
+  #   required: false
 
 runs:
   using: composite
