@@ -9,6 +9,8 @@
 set -eu
 set -o pipefail
 
+curl -sS https://raw.githubusercontent.com/envasetechnologies/.github/v1/actions/scripts/envase-connect-ascii.txt
+
 PACKAGE_JSON=./package.json
 BUILD_GRADLE=./build.gradle
 
@@ -37,14 +39,14 @@ else
     exit 1
 fi
 
-if [ $2 ]; then
+if [ -n "${2:-}" ]; then
 echo ---------- Using install token ----------
     docker build -t $APP_NAME --build-arg ENVASE_CONNECT_GPR_TOKEN=$2 .
 else
     docker build -t $APP_NAME .
 fi
 
-if [ $3 ]; then
+if [ -n "${3:-}" ]; then
     echo ---------- Using image tag ----------
     docker tag $APP_NAME $1:$3
 
