@@ -1,20 +1,14 @@
-#!/bin/bash
-set -eu
-set -o pipefail
-
+#! /bin/bash
 # install deps
-apt install which jq unzip
-curl -sSL https://git.io/get-mo -o mo
-chmod +x ./mo
-
-# install aws cli
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-unzip awscliv2.zip
-chmod +x ./aws/install && ./aws/install
+curl -sSL https://raw.githubusercontent.com/tests-always-included/mo/master/mo -o mo
+chmod +x mo
+sudo mv mo /usr/local/bin/
 
 SECRET_ID="$APP_NAME/$ENVIRONMENT"
 # Determine dev or prod env & set jq path
 JQ_PATH=$(which jq)
+
+echo "---------- $SECRET_ID -------------"
 
 output=$(aws secretsmanager get-secret-value --secret-id $SECRET_ID --output text)
 splitOutput=( $output )
@@ -57,3 +51,5 @@ if [ "$ENVIRONMENT" == "prod" ] || [ "$ENVIRONMENT" == "prd" ]; then
 fi
 
 echo "Task definition created"
+ls -la
+cat task-definition.json

@@ -29,9 +29,3 @@ runs:
           service: ${{ inputs.ecs-service }}
           cluster: ${{ inputs.ecs-cluster }}
           wait-for-service-stability: true
-
-      # - name: deploy
-      #   shell: ${{inputs.default-shell}}
-      #   run: |
-      #     aws ecs register-task-definition --cli-input-json file://task-definition.json 2>&1 > /dev/null
-      #     aws ecs update-service --cluster ${{ inputs.ecs-cluster }} --service "$APP_NAME"-"$ENVIRONMENT" --task-definition "$APP_NAME"-"$ENVIRONMENT"
