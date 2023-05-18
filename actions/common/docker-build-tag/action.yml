@@ -27,6 +27,6 @@ runs:
         shell: ${{inputs.default-shell}}
         # env:
         #   IMAGE_TAG: ${{ inputs.tag }}
-        run: ./build_deploy_docker.sh ${{inputs.ecr-uri}} ${{inputs.install-token}}
+        run: ./build_push_docker.sh ${{inputs.ecr-uri}} ${{inputs.install-token}}
 
 
