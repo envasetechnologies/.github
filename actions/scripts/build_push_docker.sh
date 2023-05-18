@@ -17,6 +17,7 @@ node_build(){
     echo Node Version: "$(node -v)"
     APP_VERSION=$(node -pe "require('./package.json').version")
     export APP_VERSION
+    echo "APP_VERSION=${APP_VERSION}" >> $GITHUB_ENV
     echo running build for version $APP_VERSION
 }
 
@@ -25,6 +26,7 @@ java_build(){
     echo Java Version: "$(java --version)"
     chmod +x ./gradlew
     APP_VERSION=$(./gradlew properties | grep ^version: | tr -d version: | cut -c2-)
+    echo "APP_VERSION=${APP_VERSION}" >> $GITHUB_ENV
     export APP_VERSION
 }
 
