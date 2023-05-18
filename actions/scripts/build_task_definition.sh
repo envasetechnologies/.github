@@ -55,3 +55,4 @@ fi
 
 echo "Task definition created"
 ls -la
+cat task-definition.json

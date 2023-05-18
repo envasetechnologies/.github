@@ -38,9 +38,12 @@ else
 fi
 
 if [ -n "${2:-}" ]; then
-echo ---------- Using install token ----------
+    echo ---------- Using install token ----------
+    echo ---------- App version: $APP_VERSION ----------
+
     docker build -t $APP_NAME --build-arg ENVASE_CONNECT_GPR_TOKEN=$2 .
 else
+    echo ---------- App version: $APP_VERSION ----------
     docker build -t $APP_NAME .
 fi
 
@@ -52,10 +55,10 @@ if [ -n "${3:-}" ]; then
     docker push $1 -a
     echo "image=$1:$3" >> $GITHUB_OUTPUT
 else
-    echo ---------- Tagging with app version ----------
+    echo ---------- Tagging with app version $APP_VERSION ----------
     docker tag $APP_NAME $1:$APP_VERSION
 
-    echo pushing
+    echo pushing $1
     docker push $1 -a
     echo "image=$1:$APP_VERSION" >> $GITHUB_OUTPUT
 fi
