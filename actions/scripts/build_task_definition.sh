@@ -3,8 +3,6 @@
 set -eu
 set -o pipefail
 
-curl -sS https://raw.githubusercontent.com/envasetechnologies/.github/v1/actions/scripts/envase-connect-ascii.txt
-
 curl -sSL https://raw.githubusercontent.com/tests-always-included/mo/master/mo -o mo
 chmod +x mo
 sudo mv mo /usr/local/bin/

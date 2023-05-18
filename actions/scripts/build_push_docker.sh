@@ -9,8 +9,6 @@
 set -eu
 set -o pipefail
 
-curl -sS https://raw.githubusercontent.com/envasetechnologies/.github/v1/actions/scripts/envase-connect-ascii.txt
-
 PACKAGE_JSON=./package.json
 BUILD_GRADLE=./build.gradle
 
