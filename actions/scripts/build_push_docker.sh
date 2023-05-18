@@ -2,7 +2,8 @@
 
 ##############################
 # $1 = ecr-uri
-# $2 = optional install token
+# $2 = optional - install token
+# $3 = optional - image tag
 ##############################
 
 PACKAGE_JSON=./package.json
@@ -40,8 +41,19 @@ else
     docker build -t $APP_NAME .
 fi
 
-docker tag $APP_NAME $1:$APP_VERSION
+if [ $3 ]; then
+    echo ---------- Using image tag ----------
+    docker tag $APP_NAME $1:$3
 
-echo pushing
-docker push $1 -a
-echo "image=$1:$APP_VERSION" >> $GITHUB_OUTPUT
+    echo pushing
+    docker push $1 -a
+    echo "image=$1:$3" >> $GITHUB_OUTPUT
+else
+    echo ---------- Tagging with app version ----------
+    docker tag $APP_NAME $1:$APP_VERSION
+
+    echo pushing
+    docker push $1 -a
+    echo "image=$1:$APP_VERSION" >> $GITHUB_OUTPUT
+fi
+
