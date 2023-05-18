@@ -1,3 +1,5 @@
+#!/bin/bash
+
 ##############################
 # $1 = ecr-uri
 # $2 = optional install token
