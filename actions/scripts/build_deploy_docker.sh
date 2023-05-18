@@ -1,3 +1,8 @@
+##############################
+# $1 = ecr-uri
+# $2 = optional install token
+##############################
+
 PACKAGE_JSON=./package.json
 BUILD_GRADLE=./build.gradle
 
