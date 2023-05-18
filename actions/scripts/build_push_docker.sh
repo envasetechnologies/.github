@@ -6,6 +6,9 @@
 # $3 = optional - image tag
 ##############################
 
+set -eu
+set -o pipefail
+
 PACKAGE_JSON=./package.json
 BUILD_GRADLE=./build.gradle
 

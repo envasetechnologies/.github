@@ -1,5 +1,8 @@
 #! /bin/bash
 # install deps
+set -eu
+set -o pipefail
+
 curl -sSL https://raw.githubusercontent.com/tests-always-included/mo/master/mo -o mo
 chmod +x mo
 sudo mv mo /usr/local/bin/
