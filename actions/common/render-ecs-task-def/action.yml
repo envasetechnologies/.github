@@ -24,7 +24,7 @@ runs:
   steps:
     - name: Build task def from template
       shell: ${{inputs.default-shell}}
-      run: sh ./build_task_definition.sh
+      run: ./build_task_definition.sh
         # # install deps
         # curl -sSL https://raw.githubusercontent.com/tests-always-included/mo/master/mo -o mo
         # chmod +x mo

@@ -11,7 +11,7 @@ JQ_PATH=$(which jq)
 echo "---------- $SECRET_ID -------------"
 
 output=$(aws secretsmanager get-secret-value --secret-id $SECRET_ID --output text)
-splitOutput=($output)
+splitOutput=$output
 secretArn=${splitOutput[0]}
 export secretArn=$secretArn
 
