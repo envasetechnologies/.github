@@ -68,9 +68,8 @@ This pipeline uses a standardized naming convention: `APP_NAME-VERSION-ENVIRONME
 
 <br>
 
-> **Example** `task-definition-template.json`:
-
 ```yml
+# task-definition-template.json
 {
   "executionRoleArn": "arn:aws:iam::{{AWS_ACCOUNT_ID}}:role/ecsTaskExecutionRole",
   "containerDefinitions": [
@@ -168,13 +167,12 @@ This pipeline uses a standardized naming convention: `APP_NAME-VERSION-ENVIRONME
 }
 
 ```
-> **End Example** `task-definition-template.json`:
 
 <br>
 
-> **Example** `Dockerfile`:
-
 ```docker
+# Dockerfile
+
 # Build Stage
 FROM amazoncorretto:17 AS build
 
@@ -201,7 +199,6 @@ COPY --from=build app.jar ./
 ENTRYPOINT ["java","-jar","/app.jar"]
 ```
 
-> **End Example** `Dockerfile`:
 <br>
 
 Below are a few example deployment yaml files outlining how to use these composite actions in your repo's github workflow.
@@ -343,6 +340,4 @@ jobs:
           task-definition: task-definition.json
           ecs-service: ${{ env.APP_NAME }}-${{ env.ENVIRONMENT }}
           ecs-cluster: envase-connect-cluster
-
-
 ```
