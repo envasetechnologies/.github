@@ -54,7 +54,7 @@ This pipeline uses a standardized naming convention: `APP_NAME-VERSION-ENVIRONME
 
 1. Secrets stored in secrets manager must be named `APP_NAME/ENVIRONMENT`
 
-2. `APP_VERSION` is pulled from `package.json` in Node projects and from `build.gradle` in Java projects. This is used to tag your ECR image. If you don't use semantic versioning, you can manuall pass in an image tag for ECR as seen in the example below.
+2. `APP_VERSION` is pulled from `package.json` in Node projects and from `build.gradle` in Java projects. This is used to tag your ECR image. If you don't use semantic versioning, you can manually pass in an image tag for ECR as seen in the example below.
 
 3. A file named `task-definition-template.json` must be located in the root of your repo. Secret values will be templated in based on the `ENVIRONMENT` env var and application env vars can be hardcoded into the template or set in the pipeline where noted in the `deploy.yml`
 
