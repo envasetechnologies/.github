@@ -4,7 +4,7 @@ A shared set of github composite actions to be used in Envase CICD pipelines
 
 ## Node.js Lambda
 
-To use the actions in this repo to bootstrap and deploy a Node.js lambda relies on the serverless framework. Below is an example deployment yaml outlining how to use these composite actions in your repo's github workflow.
+The use of actions in this repo to deploy a Node.js lambda rely on the serverless framework. Below is an example deployment yaml outlining how to use these composite actions in your repo's github workflow.
 
 ```yml
 name: Deploy
