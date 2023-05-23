@@ -69,7 +69,7 @@ This pipeline uses a standardized naming convention: `APP_NAME-VERSION-ENVIRONME
 <br>
 
 ```json
-# task-definition-template.json
+// task-definition-template.json
 {
   "executionRoleArn": "arn:aws:iam::{{AWS_ACCOUNT_ID}}:role/ecsTaskExecutionRole",
   "containerDefinitions": [
