@@ -77,7 +77,7 @@ This pipeline uses a standardized naming convention: `APP_NAME-VERSION-ENVIRONME
       "secrets": [
         {
           "name": "DB_HOST",
-          "valueFrom": "{{secretArn}}:DB_HOST::" # Secrets get templated in here by the specific named values in AWS Secrets Manager
+          "valueFrom": "{{secretArn}}:DB_HOST::" // Secrets get templated in here by the specific named values in AWS Secrets Manager
         },
         {
           "name": "DB_NAME",
@@ -115,7 +115,7 @@ This pipeline uses a standardized naming convention: `APP_NAME-VERSION-ENVIRONME
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "/ecs/{{APP_NAME}}-{{ENVIRONMENT}}", # Log group must be named this way or change it to whatever your log group is named
+          "awslogs-group": "/ecs/{{APP_NAME}}-{{ENVIRONMENT}}", // Log group must be named this way or change it to whatever your log group is named
           "awslogs-region": "{{AWS_DEFAULT_REGION}}",
           "awslogs-stream-prefix": "ecs"
         }
@@ -131,7 +131,7 @@ This pipeline uses a standardized naming convention: `APP_NAME-VERSION-ENVIRONME
       "environment": [
         {
           "name": "ENVIRONMENT",
-          "value": "{{ENVIRONMENT}}" # Application Environment variable, templated in at build time
+          "value": "{{ENVIRONMENT}}" // Application Environment variable, templated in at build time
         },
         {
           "name": "LOG_LEVEL",
@@ -139,7 +139,7 @@ This pipeline uses a standardized naming convention: `APP_NAME-VERSION-ENVIRONME
         },
         {
           "name": "PORT",
-          "value": "8080" # Application Environment variable, hardcoded as it does not change per environment
+          "value": "8080" // Application Environment variable, hardcoded as it does not change per environment
         },
         {
           "name": "TOKEN_SCOPE",
