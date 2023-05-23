@@ -46,17 +46,27 @@ jobs:
 ## ECS
 <br>
 
-To use the actions in this repo to bootstrap and deploy a dockerized ECS instance. The pipeline outlined below will build your `task-definition.json` from the template in your repo. It will also build your docker image, tag it, push it to ECR, and deploy from ECR to your ECS cluster.
+The actions in this repo are used to bootstrap and deploy a dockerized ECS instance.
 
-This pipeline uses a standardized naming convention: `APP_NAME-VERSION-ENVIRONMENT`
+<br>
+
+The pipeline will do the following:
+
+- Build your `task-definition.json` from the template in your repo. 
+- Build your docker image, 
+- Tag your docker image, 
+- Push your docker image to ECR
+- Deploy your docker image from ECR to your ECS cluster.
+
+<br>
 
 ### Requirements
 
-1. Secrets stored in secrets manager must be named `APP_NAME/ENVIRONMENT`
+1. Secrets for this pipeline must be stored in secrets manager in the following format `APP_NAME/ENVIRONMENT`
 
 2. `APP_VERSION` is pulled from `package.json` in Node projects and from `build.gradle` in Java projects. This is used to tag your ECR image. If you don't use semantic versioning, you can manually pass in an image tag for ECR as seen in the example below.
 
-3. A file named `task-definition-template.json` must be located in the root of your repo. Secret values will be templated in based on the `ENVIRONMENT` env var and application env vars can be hardcoded into the template or set in the pipeline where noted in the `deploy.yml`
+3. A file named `task-definition-template.json` must be located in the root of your repo. Secrets will be templated in from AWS Secrets Manager for the specific `ENVIRONMENT`. Environment variable for your application can be hardcoded into the template or set in the pipeline notated below with `# APPLICATION ENV VARS` in your `deploy.yml`
 
 4. An ECR Repository must be created typically named the same as `APP_NAME`
 
@@ -206,6 +216,7 @@ Below are a few example deployment yaml files outlining how to use these composi
 ## Java ECS
 
 ```yml
+# .github/workflows/deploy.yml
 name: Deploy
 
 on:
@@ -278,6 +289,7 @@ jobs:
 ## Node ECS
 
 ```yml
+# .github/workflows/deploy.yml
 name: Deploy
 
 on:
