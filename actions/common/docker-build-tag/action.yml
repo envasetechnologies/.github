@@ -30,21 +30,21 @@ runs:
         id: build-image
         shell: ${{inputs.default-shell}}
         run: >
-          echo "token is ${{inputs.install-token}}"
-          echo "tag is ${{inputs.tag}}"
+          INSTALL_TOKEN = ${{inputs.install-token}}
+          IMAGE_TAG = ${{inputs.tag}}
 
           COMMAND_ARGS="-e ${{inputs.ecr-uri}}"
 
-          if [ -v ${{inputs.install-token}} ]; then
+          if [ -v "$INSTALL_TOKEN" ]; then
             COMMAND_ARGS+=" -i ${{inputs.install-token}}"
-            echo has install token - $COMMAND_ARGS
+            echo has install token $COMMAND_ARGS
           fi
 
-          if [ -v ${{inputs.tag}} ]; then
+          if [ -v "$IMAGE_TAG" ]; then
             COMMAND_ARGS+=" -t ${{inputs.tag}}"
-            echo has image tag - $COMMAND_ARGS
+            echo has image tag $COMMAND_ARGS
           fi
 
-          echo full args - $COMMAND_ARGS
+          echo full args are $COMMAND_ARGS
 
           chmod +x build_push_docker.sh && ./build_push_docker.sh $COMMAND_ARGS
