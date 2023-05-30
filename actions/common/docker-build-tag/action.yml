@@ -32,14 +32,16 @@ runs:
         run: >
           COMMAND_ARGS="-e ${{inputs.ecr-uri}}"
 
-          if [ -n ${{inputs.install-token}} ]; then
+          if [ -v ${{inputs.install-token}} ]; then
             COMMAND_ARGS+=" -i ${{inputs.install-token}}"
+            echo has install token - $COMMAND_ARGS
           fi
 
-          if [ -n ${{inputs.tag}} ]; then
+          if [ -v ${{inputs.tag}} ]; then
             COMMAND_ARGS+=" -t ${{inputs.tag}}"
+            echo has image tag - $COMMAND_ARGS
           fi
 
-          echo $COMMAND_ARGS
+          echo full args - $COMMAND_ARGS
 
           chmod +x build_push_docker.sh && ./build_push_docker.sh $COMMAND_ARGS
