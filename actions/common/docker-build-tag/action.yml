@@ -30,8 +30,8 @@ runs:
         id: build-image
         shell: ${{inputs.default-shell}}
         run: >
-          INSTALL_TOKEN = ${{inputs.install-token}}
-          IMAGE_TAG = ${{inputs.tag}}
+          INSTALL_TOKEN=${{inputs.install-token}}
+          IMAGE_TAG=${{inputs.tag}}
 
           COMMAND_ARGS="-e ${{inputs.ecr-uri}}"
 
