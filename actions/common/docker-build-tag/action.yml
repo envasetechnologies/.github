@@ -38,11 +38,15 @@ runs:
           if [ -n "$INSTALL_TOKEN" ]; then
             COMMAND_ARGS+=" -i ${{inputs.install-token}}"
             echo has install token $COMMAND_ARGS
+          else
+            echo no install token found
           fi
 
           if [ -n "$IMAGE_TAG" ]; then
             COMMAND_ARGS+=" -t ${{inputs.tag}}"
             echo has image tag $COMMAND_ARGS
+          else
+            echo no image tag found, using APP_VERSION
           fi
 
           echo full args are $COMMAND_ARGS
