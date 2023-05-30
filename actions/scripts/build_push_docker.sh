@@ -1,16 +1,36 @@
 #!/bin/bash
 
-##############################
-# $1 = ecr-uri
-# $2 = optional - install token
-# $3 = optional - image tag
-##############################
-
 set -eu
 set -o pipefail
 
 PACKAGE_JSON=./package.json
 BUILD_GRADLE=./build.gradle
+
+INSTALL_TOKEN=""
+ECR_URI=""
+IMAGE_TAG=""
+
+function help() {
+    echo
+    echo "The available options for this script are:"
+    echo
+    echo "-e (required)     Sets the AWS ECR URI"
+    echo "-i     Sets the install token"
+    echo "-t     Sets the image tag to be used in ECR"
+    echo "-h     Shows this help screen."
+    echo
+    exit
+}
+
+while getopts e:i:t:h flag; do
+    case "${flag}" in
+    e) ECR_URI=${OPTARG} ;;
+    i) INSTALL_TOKEN=${OPTARG} ;;
+    t) IMAGE_TAG=${OPTARG} ;;
+    h) help ;;
+    *) help ;;
+    esac
+done
 
 node_build(){
     echo  ---------- Node Variation ----------
@@ -39,29 +59,29 @@ else
     exit 1
 fi
 
-if [ -n "${2:-}" ]; then
+if [ -n "$INSTALL_TOKEN" ]; then
     echo ---------- Using install token ----------
     echo ---------- App version: $APP_VERSION ----------
 
-    docker build -t $APP_NAME --build-arg ENVASE_CONNECT_GPR_TOKEN=$2 .
+    docker build -t $APP_NAME --build-arg ENVASE_CONNECT_GPR_TOKEN=$INSTALL_TOKEN .
 else
     echo ---------- App version: $APP_VERSION ----------
     docker build -t $APP_NAME .
 fi
 
-if [ -n "${3:-}" ]; then
+if [ -n "$IMAGE_TAG" ]; then
     echo ---------- Using image tag ----------
-    docker tag $APP_NAME $1:$3
+    docker tag $APP_NAME $ECR_URI:$IMAGE_TAG
 
     echo pushing
-    docker push $1 -a
-    echo "image=$1:$3" >> $GITHUB_OUTPUT
+    docker push $ECR_URI -a
+    echo "image=$ECR_URI:$IMAGE_TAG" >> $GITHUB_OUTPUT
 else
     echo ---------- Tagging with app version $APP_VERSION ----------
-    docker tag $APP_NAME $1:$APP_VERSION
+    docker tag $APP_NAME $ECR_URI:$APP_VERSION
 
-    echo pushing $1
-    docker push $1 -a
-    echo "image=$1:$APP_VERSION" >> $GITHUB_OUTPUT
+    echo pushing $ECR_URI
+    docker push $ECR_URI -a
+    echo "image=$ECR_URI:$APP_VERSION" >> $GITHUB_OUTPUT
 fi
 
