@@ -30,6 +30,9 @@ runs:
         id: build-image
         shell: ${{inputs.default-shell}}
         run: >
+          echo "token is ${{inputs.install-token}}"
+          echo "tag is ${{inputs.tag}}"
+
           COMMAND_ARGS="-e ${{inputs.ecr-uri}}"
 
           if [ -v ${{inputs.install-token}} ]; then
