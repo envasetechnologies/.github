@@ -35,12 +35,12 @@ runs:
 
           COMMAND_ARGS="-e ${{inputs.ecr-uri}}"
 
-          if [ -v "$INSTALL_TOKEN" ]; then
+          if [ -n "$INSTALL_TOKEN" ]; then
             COMMAND_ARGS+=" -i ${{inputs.install-token}}"
             echo has install token $COMMAND_ARGS
           fi
 
-          if [ -v "$IMAGE_TAG" ]; then
+          if [ -n "$IMAGE_TAG" ]; then
             COMMAND_ARGS+=" -t ${{inputs.tag}}"
             echo has image tag $COMMAND_ARGS
           fi
