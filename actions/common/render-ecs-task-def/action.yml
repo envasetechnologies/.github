@@ -16,5 +16,5 @@ runs:
   steps:
     - name: Build task def from template
       shell: ${{inputs.default-shell}}
-      run: ./build_task_definition.sh
+      run: chmod +x build_task_definition.sh && ./build_task_definition.sh
 

@@ -29,6 +29,17 @@ runs:
       - name: Build, tag, and push image to Amazon ECR
         id: build-image
         shell: ${{inputs.default-shell}}
-        run: ./build_push_docker.sh ${{inputs.ecr-uri}} ${{inputs.install-token}} ${{ inputs.tag }}
+        run: >
+          COMMAND_ARGS="-e ${{inputs.ecr-uri}}"
 
+          if [ -n ${{inputs.install-token}} ]; then
+            COMMAND_ARGS+=" -i ${{inputs.install-token}}"
+          fi
 
+          if [ -n ${{inputs.tag}} ]; then
+            COMMAND_ARGS+=" -t ${{inputs.tag}}"
+          fi
+
+          echo $COMMAND_ARGS
+
+          chmod +x build_push_docker.sh && ./build_push_docker.sh $COMMAND_ARGS
