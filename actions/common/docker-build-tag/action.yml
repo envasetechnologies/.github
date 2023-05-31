@@ -30,6 +30,8 @@ runs:
         id: build-image
         shell: ${{inputs.default-shell}}
         run: >
+          curl -sS https://raw.githubusercontent.com/envasetechnologies/.github/v1/actions/scripts/envase-connect-ascii.txt
+
           INSTALL_TOKEN=${{inputs.install-token}}
           IMAGE_TAG=${{inputs.tag}}
 

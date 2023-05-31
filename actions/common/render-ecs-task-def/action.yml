@@ -16,5 +16,10 @@ runs:
   steps:
     - name: Build task def from template
       shell: ${{inputs.default-shell}}
-      run: chmod +x build_task_definition.sh && ./build_task_definition.sh
+      run: >
+        curl -sS https://raw.githubusercontent.com/envasetechnologies/.github/v1/actions/scripts/envase-connect-ascii.txt
+
+        chmod +x build_task_definition.sh
+
+        ./build_task_definition.sh
 
