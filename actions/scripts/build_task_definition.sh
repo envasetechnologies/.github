@@ -10,6 +10,16 @@ sudo mv mo /usr/local/bin/
 SECRET_ID="$APP_NAME/$ENVIRONMENT"
 # Determine dev or prod env & set jq path
 JQ_PATH=$(which jq)
+APP_VERSION=""
+
+if [ -f "$PACKAGE_JSON" ]; then
+  APP_VERSION=$(node -pe "require('./package.json').version")
+elif [ -f "$BUILD_GRADLE" ]; then
+  APP_VERSION=$(./gradlew properties | grep ^version: | tr -d version: | cut -c2-)
+fi
+
+export APP_VERSION
+echo "APP_VERSION=${APP_VERSION}" >> $GITHUB_ENV
 
 echo "---------- $SECRET_ID -------------"
 

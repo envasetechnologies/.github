@@ -56,7 +56,8 @@ elif [ -f "$BUILD_GRADLE" ]; then
     java_build
 else
     echo Unsupported language - supported languages are Java and JavaScript/Typescript
-    exit 1
+    ex
+    it 1
 fi
 
 if [ -n "$INSTALL_TOKEN" ]; then
