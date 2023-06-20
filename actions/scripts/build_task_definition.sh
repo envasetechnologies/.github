@@ -11,6 +11,8 @@ SECRET_ID="$APP_NAME/$ENVIRONMENT"
 # Determine dev or prod env & set jq path
 JQ_PATH=$(which jq)
 APP_VERSION=""
+PACKAGE_JSON=./package.json
+BUILD_GRADLE=./build.gradle
 
 if [ -f "$PACKAGE_JSON" ]; then
   APP_VERSION=$(node -pe "require('./package.json').version")
