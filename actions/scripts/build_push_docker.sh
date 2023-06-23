@@ -9,6 +9,7 @@ BUILD_GRADLE=./build.gradle
 INSTALL_TOKEN=""
 ECR_URI=""
 IMAGE_TAG=""
+SHORT_SHA=$(git rev-parse --short HEAD)
 
 function help() {
     echo
@@ -72,17 +73,17 @@ fi
 
 if [ -n "$IMAGE_TAG" ]; then
     echo ---------- Using image tag ----------
-    docker tag $APP_NAME $ECR_URI:$IMAGE_TAG
+    docker tag $APP_NAME $ECR_URI:$IMAGE_TAG-$SHORT_SHA
 
     echo pushing
     docker push $ECR_URI -a
-    echo "image=$ECR_URI:$IMAGE_TAG" >> $GITHUB_OUTPUT
+    echo "image=$ECR_URI:$IMAGE_TAG-$SHORT_SHA" >> $GITHUB_OUTPUT
 else
     echo ---------- Tagging with app version $APP_VERSION ----------
-    docker tag $APP_NAME $ECR_URI:$APP_VERSION
+    docker tag $APP_NAME $ECR_URI:$APP_VERSION-$SHORT_SHA
 
     echo pushing $ECR_URI
     docker push $ECR_URI -a
-    echo "image=$ECR_URI:$APP_VERSION" >> $GITHUB_OUTPUT
+    echo "image=$ECR_URI:$APP_VERSION-$SHORT_SHA" >> $GITHUB_OUTPUT
 fi
 
