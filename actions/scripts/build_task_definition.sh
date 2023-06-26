@@ -13,12 +13,15 @@ JQ_PATH=$(which jq)
 APP_VERSION=""
 PACKAGE_JSON=./package.json
 BUILD_GRADLE=./build.gradle
+SHORT_SHA=$(git rev-parse --short HEAD)
 
 if [ -f "$PACKAGE_JSON" ]; then
   APP_VERSION=$(node -pe "require('./package.json').version")
 elif [ -f "$BUILD_GRADLE" ]; then
   APP_VERSION=$(./gradlew properties | grep ^version: | tr -d version: | cut -c2-)
 fi
+
+APP_VERSION="$APP_VERSION-$SHORT_SHA"
 
 export APP_VERSION
 echo "APP_VERSION=${APP_VERSION}" >> $GITHUB_ENV
