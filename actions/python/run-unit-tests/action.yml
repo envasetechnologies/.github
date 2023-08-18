@@ -17,6 +17,8 @@ runs:
   using: composite
   steps:
     - name: Execute Unit Tests
+      env:
+        pytest_verbosity: 1
       run: bolt cov
       shell: ${{ inputs.default-shell }}
 
