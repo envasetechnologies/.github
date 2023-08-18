@@ -9,6 +9,10 @@ inputs:
     description: The minimum coverage thresholds to pass the action.
     required: false
     default: '75 85'
+  coverage-report:
+    description: The coverage report to generate.
+    required: false
+    default: output/**/unittests_coverage.xml
 runs:
   using: composite
   steps:
@@ -19,7 +23,7 @@ runs:
     - name: Code Coverate Report
       uses: irongut/CodeCoverageSummary@v1.3.0
       with:
-        filename: output/**/coverage.xml
+        filename: ${{ inputs.coverage-report }}
         badge: true
         fail_below_min: true
         format: markdown
@@ -35,4 +39,3 @@ runs:
       with:
         recreate: true
         path: code-coverage-results.md
-        
