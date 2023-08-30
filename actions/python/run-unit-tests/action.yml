@@ -30,7 +30,7 @@ runs:
         fail_below_min: true
         format: markdown
         hide_branch_rate: false
-        hide_complexity: true
+        hide_complexity: false
         indicators: true
         output: both
         thresholds: ${{ inputs.coverage-thresholds }}
@@ -40,4 +40,4 @@ runs:
       if: github.event_name == 'pull_request'
       with:
         recreate: true
-        path: code-coverage-results.md
+        path: ${{ inputs.coverage-report }}
