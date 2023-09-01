@@ -36,6 +36,7 @@ runs:
         thresholds: ${{ inputs.coverage-thresholds }}
 
     - name: List Coverage Report File
+      if: always()
       run: |
         ls -l ${{ inputs.coverage-report }}
         cat ${{ inputs.coverage-report }}
