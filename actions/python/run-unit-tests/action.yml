@@ -38,8 +38,7 @@ runs:
     - name: List Coverage Report File
       if: always()
       run: |
-        ls -l ${{ inputs.coverage-report }}
-        cat ${{ inputs.coverage-report }}
+        ls -l *.md
       shell: ${{ inputs.default-shell }}
 
     - name: Add Coverage PR Comment
@@ -47,4 +46,4 @@ runs:
       if: always()
       with:
         recreate: true
-        path: ${{ inputs.coverage-report }}
+        path: code-coverage-results.md  # The generated markdown file.
