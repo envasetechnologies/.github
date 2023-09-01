@@ -48,5 +48,3 @@ runs:
       with:
         recreate: true
         path: ${{ inputs.coverage-report }}
-        ignore_empty: true
-        skip_unchanged: true
