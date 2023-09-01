@@ -1,0 +1,27 @@
+name: Install Dependencies
+description: Installs dependencies based on the specified dependencies file.
+inputs:
+
+  dependencies-file:
+    description: File containing the dependencies to install, default is package.lock.json.
+    required: false
+    default: package.lock.json
+
+  default-shell:
+    description: Default shell in which to run the action.
+    required: false
+    default: bash
+
+  install-token:
+    description: Token to access private packages during install
+    required: false
+runs:
+  using: "composite"
+  steps:
+  # TODO: add if check for package.lock and run npm ci instead
+    - name: Install Dependencies
+      run: npm i
+      shell: ${{ inputs.default-shell }}
+      env:
+        NODE_AUTH_TOKEN: ${{ inputs.install-token }}
+

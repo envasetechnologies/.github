@@ -1,0 +1,56 @@
+name: Docker build and push to ECR
+description: builds docker images, tags it with application version, and pushes to AWS ECR
+inputs:
+
+  default-shell:
+    description: Shell used to run steps.
+    required: false
+    default: bash
+
+  tag:
+    description: Tag used when tagging docker image
+    required: false
+
+  ecr-uri:
+    description: uri of the ECR repository you want your image pushed to e.g. 518892363268.dkr.ecr.us-east-1.amazonaws.com/envase-connect-build-agent
+    required: true
+
+  install-token:
+    description: Token to access private packages during install
+    required: false
+
+runs:
+  using: composite
+  steps:
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-image
+        shell: ${{inputs.default-shell}}
+        run: >
+          curl -sS https://raw.githubusercontent.com/envasetechnologies/.github/v1/actions/scripts/envase-connect-ascii.txt
+
+          INSTALL_TOKEN=${{inputs.install-token}}
+          IMAGE_TAG=${{inputs.tag}}
+
+          COMMAND_ARGS="-e ${{inputs.ecr-uri}}"
+
+          if [ -n "$INSTALL_TOKEN" ]; then
+            COMMAND_ARGS+=" -i ${{inputs.install-token}}"
+            echo has install token $COMMAND_ARGS
+          else
+            echo no install token found
+          fi
+
+          if [ -n "$IMAGE_TAG" ]; then
+            COMMAND_ARGS+=" -t ${{inputs.tag}}"
+            echo has image tag $COMMAND_ARGS
+          else
+            echo no image tag found, using APP_VERSION
+          fi
+
+          echo full args are $COMMAND_ARGS
+
+          chmod +x build_push_docker.sh && ./build_push_docker.sh $COMMAND_ARGS

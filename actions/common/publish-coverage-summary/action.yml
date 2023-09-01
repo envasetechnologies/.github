@@ -1,0 +1,33 @@
+name: Setup Serverless Framework
+description: Installs Serverless Framework to deploy project
+inputs:
+
+  default-shell:
+    description: Shell used to run steps.
+    required: false
+    default: bash
+
+  coverage-summary-path :
+    description: path to coburtura .
+    required: false
+    default: "16.x"
+
+  stage:
+    description: Stage to test serverless spec.
+    required: false
+    default: stg
+
+runs:
+  using: composite
+  steps:
+    - name: Publish Code Coverage Report
+      shell: ${{ inputs.default-shell }}
+      uses: irongut/CodeCoverageSummary@v1.3.0
+        with:
+          filename: ${{ inputs.coverage-summary-path }}
+          badge: true
+          format: markdown
+          hide_branch_rate: false
+          hide_complexity: true
+          indicators: true
+          output: both
