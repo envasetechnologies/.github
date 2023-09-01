@@ -54,8 +54,8 @@ runs:
     - name: Add Coverage Report to PR
       uses: Libra-foundation/Pull-Request-Comments@V1.1.1
       if: always()
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # env:
+      #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         filename: ${{ inputs.coverage-report }}
         tag: template
