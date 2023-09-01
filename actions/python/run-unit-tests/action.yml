@@ -42,11 +42,21 @@ runs:
         cat ${{ inputs.coverage-report }}
       shell: ${{ inputs.default-shell }}
 
-    - name: Add Coverage PR Comment
-      uses: marocchino/sticky-pull-request-comment@v2
+    # - name: Add Coverage PR Comment
+    #   uses: marocchino/sticky-pull-request-comment@v2
+    #   if: always()
+    #   with:
+    #     recreate: true
+    #     path: ${{ inputs.coverage-report }}
+    #     ignore_empty: true
+    #     skip_unchanged: true
+
+    - name: Add Coverage Report to PR
+      uses: Libra-foundation/Pull-Request-Comments@V1.1.1
       if: always()
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        recreate: true
-        path: ${{ inputs.coverage-report }}
-        ignore_empty: true
-        skip_unchanged: true
+        filename: ${{ inputs.coverage-report }}
+        tag: template
+        override: true
