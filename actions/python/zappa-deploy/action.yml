@@ -1,0 +1,59 @@
+name: Zappa Deployment
+description: Executes a zappa deployment within a virtual environment, which is required by zappa.
+inputs:
+  requirements-file:
+    description: File containing the requirements to install.
+    required: true
+    default: requirements-dev.txt
+  index-url:
+    description: URL for an index other than PyPI
+    required: false
+    default: PyPI
+  release-task:
+    description: Bolt task that executes the commands to released.
+    required: false
+    default: "post-release"
+  default-shell:
+    description: Default shell in which to run the action.
+    required: false
+    default: bash
+runs:
+  using: composite
+  steps:
+    - name: Fetch Repo Tags
+      run: git fetch --tags
+      shell: ${{ inputs.default-shell }}
+    - name: Create Virtual Environment
+      run: |
+        python -m venv deployment
+        . ./deployment/bin/activate
+        python -m pip install --upgrade pip
+      shell: ${{ inputs.default-shell }}
+
+    - name: Install Requirements in Virtual Environment from PyPI
+      run: |
+        . ./deployment/bin/activate
+        python -m pip install -r ${{ inputs.requirements-file }}
+      if: ${{ inputs.index-url == 'PyPI' }}
+      shell: ${{ inputs.default-shell }}
+
+    - name: Install Requirements in Virtual Environment from External
+      run: |
+        . ./deployment/bin/activate
+        python -m pip install -r ${{ inputs.requirements-file }} --index-url ${{ inputs.index-url }}
+      if: ${{ inputs.index-url != 'PyPI' }}
+      shell: ${{ inputs.default-shell }}
+
+    - name: List Virtual Environment
+      run: |
+        . ./deployment/bin/activate
+        pip list
+      shell: ${{ inputs.default-shell }}
+    
+    - name: Deploy Service
+      run: |
+        . ./deployment/bin/activate
+        bolt ${{ inputs.release-task }}
+      shell: ${{ inputs.default-shell }}
+    
+        

@@ -1,0 +1,23 @@
+name: Install Dependencies
+description: Installs requirements based on the specified requirements file and index.
+inputs:
+  serverless-action:
+    description: Serverless action you want to run, default is deploy.
+    required: false
+    default: deploy
+  stage:
+    description: Serverless stage you want to run action against, default is test.
+    required: false
+    default: test
+
+  default-shell:
+    description: Default shell in which to run the action.
+    required: false
+    default: bash
+
+runs:
+  using: "composite"
+  steps:
+    - name: serverless ${{inputs.serverless-action}}
+      shell: ${{ inputs.default-shell }}
+      run: serverless ${{inputs.serverless-action}} --stage ${{inputs.stage}}

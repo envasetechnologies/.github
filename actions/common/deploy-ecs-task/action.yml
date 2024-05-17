@@ -1,0 +1,31 @@
+name: ECS Deploy
+description: Deploys docker image and task definition to AWS Elastic Container Service (ECS).
+inputs:
+
+  default-shell:
+    description: Shell used to run steps.
+    required: false
+    default: bash
+
+  task-definition:
+    description: relative path to your ecs task definition file.
+    required: true
+
+  ecs-service:
+    description: Name of the ECS service you want to deploy to
+    required: true
+
+  ecs-cluster:
+    description: Name of the ECS cluster you want to deploy to.
+    required: true
+
+runs:
+  using: composite
+  steps:
+      - name: deploy
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ inputs.task-definition }}
+          service: ${{ inputs.ecs-service }}
+          cluster: ${{ inputs.ecs-cluster }}
+          wait-for-service-stability: true
