@@ -33,7 +33,7 @@ runs:
       shell: ${{ inputs.default-shell }}
 
     - name: Install Serverless
-      run: sudo yarn global add serverless
+      run: yarn global add serverless
       shell: ${{ inputs.default-shell }}
 
     - name: Installing Dependencies
