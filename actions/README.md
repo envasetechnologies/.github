@@ -24,7 +24,7 @@ jobs:
       AWS_DEFAULT_REGION: us-east-1
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Install Node, Serverless, and dependencies
         uses: envasetechnologies/.github/actions/js/setup-environment@v1 # Points to this repo's composite action on the v1 branch
@@ -241,7 +241,7 @@ jobs:
       GEOFENCE_PROVIDER_CRON_JOB: "0 0 0 * * SUN"
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Download scripts
         run: >
@@ -310,7 +310,7 @@ jobs:
       LOG_LEVEL: debug
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Download scripts
         run: >
