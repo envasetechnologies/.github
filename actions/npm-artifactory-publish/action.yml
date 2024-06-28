@@ -12,11 +12,6 @@ inputs:
     required: false
     default: https://profittools.jfrog.io/artifactory/api/npm/npm-local/
 
-  access-token:
-    description: Access token for the artifactory repository.
-    required: false
-    default: ${{ secrets.ARTIFACTORY_TOKEN }}
-
 runs:
   using: composite
   steps:
@@ -25,7 +20,7 @@ runs:
       shell: ${{ inputs.default-shell }}
 
     - name: Authorize Artifactory Registry
-      run: echo "//profittools.jfrog.io/artifactory/api/npm/npm/:_authToken=${{ inputs.access-token }}" >> .npmrc
+      run: echo "//profittools.jfrog.io/artifactory/api/npm/npm/:_authToken=${{ secrets.ARTIFACTORY_TOKEN }}" >> .npmrc
       shell: ${{ inputs.default-shell }}
 
     - name: Publish Package

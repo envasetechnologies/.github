@@ -13,7 +13,6 @@ Installs npm packages from and Artifactory repository. A virtual repository has 
 ### Inputs
 - default-shell: Uses `bash` but can be overwritten to use `pwsh` in windows.
 - registry: The artifactory registry to use. The default points to the Envase registry that can be used as single source of packages.
-- access-token: Access token to use for authentication. This parameter has a result that reads `secrets.ART_TOKEN` but is exposed as backdoor in case it needs to be overwritten.
 
 ### Example
 
@@ -48,7 +47,6 @@ Publishes the project package to artifactory. All the configuration happens in `
 ### Inputs
 - default-shell: Uses `bash` but can be overwritten to use `pwsh` in windows.
 - registry: The local artifactory registry where the package is published. The default points to the `npm-local` registry in Artifactory.
-- access-token: Access token to use for authentication. This parameter has a result that reads `secrets.ART_TOKEN` but is exposed as backdoor in case it needs to be overwritten.
 
 ### Example
 
