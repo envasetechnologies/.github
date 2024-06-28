@@ -1,0 +1,35 @@
+name: NPM Artifactory Install
+description: Installs npm dependencies from an artifactory repository.
+inputs:
+
+  default-shell:
+    description: Default shell in which to run the action.
+    required: false
+    default: bash
+
+  registry:
+    description: Registry URL for artifactory repository.
+    required: false
+    default: https://profittools.jfrog.io/artifactory/api/npm/npm/
+
+  access-token:
+    description: Access token for the artifactory repository.
+    required: false
+    default: ${{ secrets.ART_TOKEN }}
+
+  
+
+runs:
+  using: composite
+  steps:
+    - name: Configure Artifactory Registry
+      run: echo "registry=${{ inputs.registry }}" >> .npmrc
+      shell: ${{ inputs.default-shell }}
+
+    - name: Authorize Artifactory Registry
+      run: echo "//profittools.jfrog.io/artifactory/api/npm/npm/:_authToken=${{ inputs.access-token }}" >> .npmrc
+      shell: ${{ inputs.default-shell }}
+
+    - name: Install Dependencies
+      run: npm install --registry ${{ inputs.registry }}
+      shell: ${{ inputs.default-shell }}
