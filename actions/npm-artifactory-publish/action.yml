@@ -23,6 +23,14 @@ runs:
       run: echo "registry=${{ inputs.registry }}" >> .npmrc
       shell: ${{ inputs.default-shell }}
 
+    - name: Set Artifactory User
+      run: echo "//profittools.jfrog.io/artifactory/api/npm/npm/:username=admin" >> .npmrc
+      shell: ${{ inputs.default-shell }}
+
+    - name: Set Artifactory User Email
+      run: echo "//profittools.jfrog.io/artifactory/api/npm/npm/:email=irodriguez@profittools.net" >> .npmrc
+      shell: ${{ inputs.default-shell }}
+
     - name: Authorize Artifactory Registry
       run: echo "//profittools.jfrog.io/artifactory/api/npm/npm/:_authToken=${{ inputs.token }}" >> .npmrc
       shell: ${{ inputs.default-shell }}
