@@ -19,19 +19,19 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: Set Artifactory User Email
+      run: echo "email=irodriguez@profittools.net" >> .npmrc
+      shell: ${{ inputs.default-shell }}
+
+    - name: Force Auth
+      run: echo "always-auth=true"
+      shell: ${{ inputs.default-shell }}
+
     - name: Configure Artifactory Registry
       run: echo "registry=${{ inputs.registry }}" >> .npmrc
       shell: ${{ inputs.default-shell }}
 
-    - name: Set Artifactory User
-      run: echo "//profittools.jfrog.io/artifactory/api/npm/npm/:username=admin" >> .npmrc
-      shell: ${{ inputs.default-shell }}
-
-    - name: Set Artifactory User Email
-      run: echo "//profittools.jfrog.io/artifactory/api/npm/npm/:email=irodriguez@profittools.net" >> .npmrc
-      shell: ${{ inputs.default-shell }}
-
-    - name: Authorize Artifactory Registry
+    - name: Set Authorization Token
       run: echo "//profittools.jfrog.io/artifactory/api/npm/npm/:_authToken=${{ inputs.token }}" >> .npmrc
       shell: ${{ inputs.default-shell }}
 
