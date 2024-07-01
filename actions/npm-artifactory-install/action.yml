@@ -16,7 +16,6 @@ inputs:
     description: Artifactory access token.
     required: true
 
-
 runs:
   using: composite
   steps:

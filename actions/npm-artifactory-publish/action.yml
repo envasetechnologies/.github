@@ -19,6 +19,14 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: Update NPM.
+      run: npm install -g npm@latest
+      shell: ${{ inputs.default-shell }}
+    
+    - name: Show npm version
+      run: npm --version
+      shell: ${{ inputs.default-shell }}
+
     - name: Configure Artifactory
       run: |
         echo "email=irodriguez@profittools.net" > .npmrc
