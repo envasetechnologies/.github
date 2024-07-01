@@ -17,9 +17,9 @@ Installs npm packages from and Artifactory repository. A virtual repository has 
 ### Example
 
 ```yaml
-name: Install NPM from ARtifactory
+name: Install NPM from Artifactory
 
-on:
+on: 
     pull_request:
         branches: [main]
 
@@ -31,12 +31,14 @@ jobs:
 
             - uses: actions/setup-node@v4
               with:
-                  node-version: 18
-                  registry-url: https://npm.pkg.github.com
-                  scope: '@envasetechnologies'
+                node-version: 18
+                registry-url: https://npm.pkg.github.com
+                scope: '@envasetechnologies'
 
             - name: Install Dependencies
               uses: envasetechnologies/.github/actions/npm-artifactory-install@v3
+              with:
+                token: ${{ secrets.ARTIFACTORY_TOKEN }}
 
 ```
 
@@ -65,12 +67,14 @@ jobs:
 
             - uses: actions/setup-node@v4
               with:
-                  node-version: 18
-                  registry-url: https://npm.pkg.github.com
-                  scope: '@envasetechnologies'
+                node-version: 18
+                registry-url: https://npm.pkg.github.com
+                scope: '@envasetechnologies'
 
             - name: Install Dependencies
               uses: envasetechnologies/.github/actions/npm-artifactory-publish@v3
+              with:
+                token: ${{ secrets.ARTIFACTORY_TOKEN }}
 ```
 
 > INFO: Additional actions coming soon. Use v1 or v2 for earlier workflows.

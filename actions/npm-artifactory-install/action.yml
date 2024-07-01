@@ -12,6 +12,10 @@ inputs:
     required: false
     default: https://profittools.jfrog.io/artifactory/api/npm/npm/
 
+  token:
+    description: Artifactory access token.
+    required: true
+
 
 runs:
   using: composite
@@ -21,7 +25,7 @@ runs:
       shell: ${{ inputs.default-shell }}
 
     - name: Authorize Artifactory Registry
-      run: echo "//profittools.jfrog.io/artifactory/api/npm/npm/:_authToken=${{ secrets.ARTIFACTORY_TOKEN }}" >> .npmrc
+      run: echo "//profittools.jfrog.io/artifactory/api/npm/npm/:_authToken=${{ inputs.token }}" >> .npmrc
       shell: ${{ inputs.default-shell }}
 
     - name: Install Dependencies
