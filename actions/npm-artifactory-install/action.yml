@@ -20,12 +20,12 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Configure Artifactory Registry
-      run: echo "registry=${{ inputs.registry }}" >> .npmrc
-      shell: ${{ inputs.default-shell }}
-
-    - name: Authorize Artifactory Registry
-      run: echo "//profittools.jfrog.io/artifactory/api/npm/npm/:_authToken=${{ inputs.token }}" >> .npmrc
+    - name: Configure Artifactory
+      run: |
+        echo "email=irodriguez@profittools.net" >> .npmrc
+        echo "always-auth=true" >> .npmrc
+        echo "registry=${{ inputs.registry }}" >> .npmrc
+        echo "//profittools.jfrog.io/artifactory/api/npm/npm/:_authToken=${{ inputs.token }}" >> .npmrc
       shell: ${{ inputs.default-shell }}
 
     - name: Install Dependencies

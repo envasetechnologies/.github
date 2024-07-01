@@ -19,7 +19,7 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Set Artifactory User Email
+    - name: Configure Artifactory
       run: |
         echo "email=irodriguez@profittools.net" >> .npmrc
         echo "always-auth=true" >> .npmrc
