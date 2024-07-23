@@ -5,6 +5,10 @@ inputs:
     description: Default shell in which to run the action.
     required: false
     default: bash
+  task:
+    description: Task that defines the execution of unit tests.
+    required: false
+    default: cov
   thresholds:
     description: The minimum coverage thresholds to pass the action.
     required: false
@@ -20,6 +24,8 @@ runs:
       env:
         pytest_verbosity: "1"
       uses: envasetechnologies/.github/actions/bolt@v3
+      with:
+        task: ${{ inputs.task }}
 
     - name: Code Coverate Report
       uses: irongut/CodeCoverageSummary@v1.3.0
