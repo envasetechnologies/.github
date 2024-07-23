@@ -136,6 +136,46 @@ jobs:
           token: ${{ secrets.ARTIFACTORY_TOKEN }}
 ```
 
+## Run Unit Tests
+
+This task runs unit tests with coverage generating a report on the PR. The task uses bolt to execute the unit tests, but it doesn't set it up, so it has to be setup prior this task is executed.
+
+### Inputs
+
+- default-shell: Uses `bash` but can be overwritten to use `pwsh` in windows.
+- thresholds: Thresholds for warning and error on the covered lines. If the coverage rate falls below the minimum allowed, the workflow fails.
+- report: Location of the coverage XML file after the tests are run.
+
+### Example
+
+```yaml
+name: Run Unit Tests
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  install-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source
+        uses: envasetechnologies/.github/actions/checkout-sourcet@v3
+
+      - name: Setup Python
+        uses: envasetechnologies/.github/actions/setup-python@v3
+        with:
+          python-version: 3.12
+          requirements-file: requirements.txt
+          index-url: https://artifactory/url
+
+      - name: Run Unit Tests
+        uses: envasetechnologies/.github/actions/setup-python@v3
+        with:
+          thresholds: '80 90'
+          report: coverage.xml
+```
+
 ## Setup Python
 
 Sets python and installs requirements. By default, it installs the requirements listed in `requirements-dev.txt` which is what we use in most projects, but this can be customized using the `requirements-file` parameter.
