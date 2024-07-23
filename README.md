@@ -31,7 +31,7 @@ jobs:
     steps:
       - name: Checkout Source
               uses: envasetechnologies/.github/actions/checkout-sourcet@v3
-        
+
       - name: Setup Python (requirements-dev.txt contains bolt-ta)
         uses: envasetechnologies/.github/actions/setup-python@v3
 
@@ -50,16 +50,16 @@ This task wraps the standard `checkout` action. This allows us to use the same v
 ```yaml
 name: Checkout Source
 
-on: 
-    pull_request:
-        branches: [main]
+on:
+  pull_request:
+    branches: [main]
 
 jobs:
-    checkout-sources:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout Source
-              uses: envasetechnologies/.github/actions/checkout-sourcet@v3
+  checkout-sources:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source
+        uses: envasetechnologies/.github/actions/checkout-sourcet@v3
 ```
 
 ## NPM Install Packages from Artifactory
@@ -75,29 +75,28 @@ Installs npm packages from and Artifactory repository. A virtual repository has 
 ```yaml
 name: Install NPM from Artifactory
 
-on: 
-    pull_request:
-        branches: [main]
+on:
+  pull_request:
+    branches: [main]
 
 jobs:
-    install-dependencies:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout Source
-              uses: envasetechnologies/.github/actions/checkout-sourcet@v3
+  install-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source
+        uses: envasetechnologies/.github/actions/checkout-sourcet@v3
 
-            - name: Setup Node
-              uses: actions/setup-node@v4
-              with:
-                node-version: 18
-                registry-url: https://npm.pkg.github.com
-                scope: '@envasetechnologies'
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          registry-url: https://npm.pkg.github.com
+          scope: '@envasetechnologies'
 
-            - name: Install Dependencies
-              uses: envasetechnologies/.github/actions/npm-artifactory-install@v3
-              with:
-                token: ${{ secrets.ARTIFACTORY_TOKEN }}
-
+      - name: Install Dependencies
+        uses: envasetechnologies/.github/actions/npm-artifactory-install@v3
+        with:
+          token: ${{ secrets.ARTIFACTORY_TOKEN }}
 ```
 
 ## NPM Publish Package to Artifactory
@@ -114,27 +113,27 @@ Publishes the project package to Artifactory. All the configuration happens in `
 name: Install NPM from ARtifactory
 
 on:
-    pull_request:
-        branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
-    install-dependencies:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout Source
-              uses: envasetechnologies/.github/actions/checkout-sourcet@v3
+  install-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source
+        uses: envasetechnologies/.github/actions/checkout-sourcet@v3
 
-            - name: Setup Node
-              uses: actions/setup-node@v4
-              with:
-                node-version: 18
-                registry-url: https://npm.pkg.github.com
-                scope: '@envasetechnologies'
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          registry-url: https://npm.pkg.github.com
+          scope: '@envasetechnologies'
 
-            - name: Install Dependencies
-              uses: envasetechnologies/.github/actions/npm-artifactory-publish@v3
-              with:
-                token: ${{ secrets.ARTIFACTORY_TOKEN }}
+      - name: Install Dependencies
+        uses: envasetechnologies/.github/actions/npm-artifactory-publish@v3
+        with:
+          token: ${{ secrets.ARTIFACTORY_TOKEN }}
 ```
 
 ## Setup Python
@@ -154,22 +153,22 @@ Sets python and installs requirements. By default, it installs the requirements 
 name: Install NPM from ARtifactory
 
 on:
-    pull_request:
-        branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
-    install-dependencies:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout Source
-              uses: envasetechnologies/.github/actions/checkout-sourcet@v3
+  install-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source
+        uses: envasetechnologies/.github/actions/checkout-sourcet@v3
 
-            - name: Setup Python
-              uses: envasetechnologies/.github/actions/setup-python@v3
-              with:
-                python-version: 3.12
-                requirements-file: requirements.txt
-                index-url: https://artifactory/url
+      - name: Setup Python
+        uses: envasetechnologies/.github/actions/setup-python@v3
+        with:
+          python-version: 3.12
+          requirements-file: requirements.txt
+          index-url: https://artifactory/url
 ```
 
 > INFO: Additional actions coming soon. Use v1 or v2 for earlier workflows.
