@@ -38,7 +38,7 @@ jobs:
       - name: Run Unit Tests in CI Through Bolt Task
         uses: envasetechnologies/.github/actions/bolt@v3
         with:
-          task: unit-test-task
+          task: configured-task
 ```
 
 ## Bolt Feature Tests
@@ -71,8 +71,6 @@ jobs:
 
       - name: Run Feature Tests in CI Through Bolt Task
         uses: envasetechnologies/.github/actions/bolt@v3
-        with:
-          task: feature-test-task
 ```
 
 ## Bolt Unit Tests
