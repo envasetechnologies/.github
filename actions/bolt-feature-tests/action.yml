@@ -1,0 +1,18 @@
+name: Bolt Feature Tests
+description: Executes the feature tests generation results.
+inputs:
+  default-shell:
+    description: Default shell in which to run the action.
+    required: false
+    default: bash
+  task:
+    description: Task that defines the execution of unit tests.
+    required: false
+    default: ftci
+runs:
+  using: composite
+  steps:
+    - name: Execute Feature Tests
+      uses: envasetechnologies/.github/actions/bolt@v3
+      with:
+        task: ${{ inputs.task }}

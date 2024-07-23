@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source
-              uses: envasetechnologies/.github/actions/checkout-sourcet@v3
+        uses: envasetechnologies/.github/actions/checkout-sourcet@v3
 
       - name: Setup Python (requirements-dev.txt contains bolt-ta)
         uses: envasetechnologies/.github/actions/setup-python@v3
@@ -38,7 +38,41 @@ jobs:
       - name: Run Unit Tests in CI Through Bolt Task
         uses: envasetechnologies/.github/actions/bolt@v3
         with:
-          task: cov
+          task: unit-test-task
+```
+
+## Bolt Feature Tests
+
+Executes the feature tests using bolt. It runs the `ftci` task by default, but it can be modified through the task input.
+
+### Inputs
+
+- default-shell: Uses `bash` but can be overwritten to use `pwsh` in windows.
+- task: Bolt task that defines the execution of feature tests. By default, it uses `ftci` task.
+
+### Example
+
+```yaml
+name: Execute Bolt Task
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  execute-bolt-task:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source
+        uses: envasetechnologies/.github/actions/checkout-sourcet@v3
+
+      - name: Setup Python (requirements-dev.txt contains bolt-ta)
+        uses: envasetechnologies/.github/actions/setup-python@v3
+
+      - name: Run Feature Tests in CI Through Bolt Task
+        uses: envasetechnologies/.github/actions/bolt@v3
+        with:
+          task: feature-test-task
 ```
 
 ## Bolt Unit Tests
@@ -48,7 +82,7 @@ This task runs unit tests with coverage generating a report on the PR. The task 
 ### Inputs
 
 - default-shell: Uses `bash` but can be overwritten to use `pwsh` in windows.
-- task: Bolt task that defines the execution of unit tests.
+- task: Bolt task that defines the execution of unit tests. By default, it uses the `cov` task.
 - thresholds: Thresholds for warning and error on the covered lines. If the coverage rate falls below the minimum allowed, the workflow fails.
 - report: Location of the coverage XML file after the tests are run.
 

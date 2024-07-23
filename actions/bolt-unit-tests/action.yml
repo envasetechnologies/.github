@@ -1,4 +1,4 @@
-name: Run Unit Tests
+name: Bolt Unit Tests
 description: Executes the unit tests generating result and coverage reports.
 inputs:
   default-shell:
