@@ -1,0 +1,20 @@
+name: Bolt
+description: Executes a bolt task
+inputs:
+  
+  task:
+    description: Command to execute.
+    required: true
+  
+  default-shell:
+    description: Shell in which to execute the action.
+    required: false
+    default: bash
+
+runs:
+  using: composite
+  steps:
+    - name: Execute Task ${{ inputs.task }}
+      run: bolt ${{ inputs.task }}
+      shell: ${{ inputs.default-shell }}
+
