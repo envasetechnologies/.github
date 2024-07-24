@@ -16,3 +16,4 @@ runs:
       uses: envasetechnologies/.github/actions/bolt@v3
       with:
         task: ${{ inputs.task }}
+        default-shell: ${{ inputs.default-shell }}

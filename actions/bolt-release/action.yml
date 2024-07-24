@@ -1,0 +1,32 @@
+name: Bolt Release
+description: Releases the project using a configured bolt task.
+inputs:
+  default-shell:
+    description: Default shell in which to run the action.
+    required: false
+    default: bash
+  fetch-tags:
+    description: Whether we want to fetch tags before releasing.
+    required: false
+    default: 'false'
+
+  task:
+    description: The bolt task configured for release.
+    required: false
+    default: post-release
+
+runs:
+  using: composite
+  steps:
+
+    - name: Fetch tags
+      if: ${{ inputs.fetch-tags == 'true' }}
+      run: git fetch --tags
+      shell: ${{ inputs.default-shell }}
+
+    - name: Deploy ${ BRANCH_NAME } using ${{ inputs.task }}
+      uses: envasetechnologies/.github/actions/bolt@v3
+      with:
+        task: ${{ inputs.task }}
+        default-shell: ${{ inputs.default-shell }}
+
