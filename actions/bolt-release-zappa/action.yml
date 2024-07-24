@@ -1,0 +1,65 @@
+name: Bolt Release Zappa
+description: Releases a Zappa project using a configured bolt task.
+inputs:
+  default-shell:
+    description: Default shell in which to run the action.
+    required: false
+    default: bash
+
+  fetch-tags:
+    description: Whether we want to fetch tags before releasing.
+    required: false
+    default: 'false'
+
+  task:
+    description: The bolt task configured for release.
+    required: false
+    default: post-release
+
+  requirements-file:
+    description: File containing the production requirements to install.
+    required: true
+    default: requirements.txt
+
+runs:
+  using: composite
+  steps:
+
+    - name: Create Virtual Environment
+      run: python -m venv deployment
+      shell: ${{ inputs.default-shell }}
+
+    - name: Upgrade pip
+      run: |
+        . ./deployment/bin/activate
+        python -m pip install --upgrade pip
+      shell: ${{ inputs.default-shell }}
+
+    - name: Install production requirements
+      run: | 
+        . ./deployment/bin/activate
+        python -m pip install -r ${{ inputs.requirements-file }}
+      shell: ${{ inputs.default-shell }}
+
+    - name: Install Zappa
+      run: |
+        . ./deployment/bin/activate
+        python -m pip install zappa
+      shell: ${{ inputs.default-shell }}
+
+    - name: List production requirements
+      run: | 
+        . ./deployment/bin/activate
+        pip list
+      shell: ${{ inputs.default-shell }}
+
+    - name: Deploy ${ BRANCH_NAME } using ${{ inputs.task }}
+      run: |
+          . ./deployment/bin/activate
+          bolt ${{ inputs.task }}
+      with:
+        task: ${{ inputs.task }}
+        fetch-tags: ${{ inputs.fetch-tags }}
+        default-shell: ${{ inputs.default-shell }}
+      shell: ${{ inputs.default-shell }}
+
