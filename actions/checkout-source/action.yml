@@ -1,0 +1,19 @@
+name: Checkout Source
+description: Checks out the source of the repository.
+inputs:
+  default-shell:
+    description: Shell in which to execute the action.
+    required: false
+    default: bash
+
+runs:
+  using: composite
+  steps:
+    - name: Checkout Source
+      uses: actions/checkout@v4
+      shell: ${{ inputs.default-shell }}
+
+    - name: Show Root Content
+      run: ls
+      shell: ${{ inputs.default-shell }}
+      

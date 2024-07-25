@@ -1,0 +1,46 @@
+name: Setup Serverless Framework
+description: Installs Serverless Framework to deploy project
+inputs:
+
+  default-shell:
+    description: Shell used to run steps.
+    required: false
+    default: bash
+
+  node-version:
+    description: Version of Python to use.
+    required: false
+    default: "16.x"
+
+  stage:
+    description: Stage to test serverless spec.
+    required: false
+    default: stg
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v3
+      with:
+        node-version: ${{ inputs.node-version }}
+
+    - name: Apt-Get Update
+      run: sudo apt-get update
+      shell: ${{ inputs.default-shell }}
+
+    - name: Install Yarn
+      run: sudo apt-get install -yqq yarn
+      shell: ${{ inputs.default-shell }}
+
+    - name: Install Serverless
+      run: yarn global add serverless@3
+      shell: ${{ inputs.default-shell }}
+
+    - name: Installing Dependencies
+      run: yarn install
+      shell: ${{ inputs.default-shell }}
+
+    - name: Verify Serverless Specn
+      run: serverless print --stage ${{ inputs.stage }}
+      shell: ${{ inputs.default-shell }}
+

@@ -1,0 +1,36 @@
+name: Run Bolt Task
+description: Executes the specified bolt task.
+inputs:
+  default-shell:
+    description: Default shell in which to run the action.
+    required: false
+    default: bash
+  setup-python:
+    description: Does python needs to be setup.
+    required: false
+    default: "true"
+  python-version:
+    description: What version to setup if needed.
+    required: false
+    default:  "3.12"
+  command:
+    description: bolt command to Execute
+    required: true
+    
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Python ${{ inputs.python-version }}
+      if: ${{ inputs.setup-python == 'true' }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ inputs.python-version }}
+    
+    - name: Install Requirements
+      uses: envasetechnologies/.github/actions/python/install-requirements@v2
+      with:
+        requirements-file: ${{ inputs.requirements-file }}
+
+    - name: Run Bolt Task 
+      run: bolt ${{ inputs.command }}
+      shell: ${{ inputs.default-shell }}

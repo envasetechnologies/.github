@@ -1,0 +1,22 @@
+name: Setup Environment
+description: Installs Node and sets up the dependencies.
+inputs:
+
+  default-shell:
+    description: Shell used to run steps.
+    required: false
+    default: bash
+
+runs:
+  using: composite
+  steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Install Dependencies Run Lint and Test Coverage
+      shell: ${{ inputs.default-shell }}
+      run: |
+        echo "//npm.pkg.github.com/:_authToken=${{ secrets.ENVASE_CONNECT_GPR_TOKEN }}" >> .npmrc
+        npm install
+        npm run lint
+        npm run test-coverage
