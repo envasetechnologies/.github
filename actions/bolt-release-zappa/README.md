@@ -14,7 +14,7 @@ Releases a project through Zappa using bolt.It creates a virtual environment for
 ## Example
 
 ```yaml
-name: Execute Bolt Task
+name: Deploy with Zappa Example
 
 on:
   pull_request:
