@@ -7,39 +7,10 @@ The following sections document the provided actions.
 > The documentation must be up-to-date and maintained in alphabetical order by the action name.
 
 
-## Bolt
+- [bolt](./actions/bolt): Executes the specified bolt task.
+- [bolt-release-zappa](.actions/bolt-release-zappa): Deploys a Flask application to AWS Lambda using Zappa.
 
-Executes the specified bolt task. Python and bolt are required for the task to run, but they are not installed by the task, so they should be setup prior to executing this task.
 
-### Inputs
-
-- default-shell: Uses `bash` but can be overwritten to use `pwsh` in windows.
-- task: The task to execute. The task must be defined in a `boltfile.py`.
-
-### Example
-
-```yaml
-name: Execute Bolt Task
-
-on:
-  pull_request:
-    branches: [main]
-
-jobs:
-  execute-bolt-task:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Source
-        uses: envasetechnologies/.github/actions/checkout-sourcet@v3
-
-      - name: Setup Python (requirements-dev.txt contains bolt-ta)
-        uses: envasetechnologies/.github/actions/setup-python@v3
-
-      - name: Run Unit Tests in CI Through Bolt Task
-        uses: envasetechnologies/.github/actions/bolt@v3
-        with:
-          task: configured-task
-```
 
 ## Bolt Feature Tests
 
@@ -64,7 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source
-        uses: envasetechnologies/.github/actions/checkout-sourcet@v3
+        uses: envasetechnologies/.github/actions/checkout-sources@v3
 
       - name: Setup Python (requirements-dev.txt contains bolt-ta)
         uses: envasetechnologies/.github/actions/setup-python@v3
@@ -97,7 +68,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source
-        uses: envasetechnologies/.github/actions/checkout-sourcet@v3
+        uses: envasetechnologies/.github/actions/checkout-sources@v3
 
       - name: Setup Python (requirements-dev.txt contains bolt-ta)
         uses: envasetechnologies/.github/actions/setup-python@v3
@@ -135,7 +106,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source
-        uses: envasetechnologies/.github/actions/checkout-sourcet@v3
+        uses: envasetechnologies/.github/actions/checkout-sources@v3
 
       - name: Setup Python
         uses: envasetechnologies/.github/actions/setup-python@v3
@@ -169,7 +140,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source
-        uses: envasetechnologies/.github/actions/checkout-sourcet@v3
+        uses: envasetechnologies/.github/actions/checkout-sources@v3
 ```
 
 ## NPM Install Packages from Artifactory
@@ -194,7 +165,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source
-        uses: envasetechnologies/.github/actions/checkout-sourcet@v3
+        uses: envasetechnologies/.github/actions/checkout-sources@v3
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -231,7 +202,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source
-        uses: envasetechnologies/.github/actions/checkout-sourcet@v3
+        uses: envasetechnologies/.github/actions/checkout-sources@v3
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -271,7 +242,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source
-        uses: envasetechnologies/.github/actions/checkout-sourcet@v3
+        uses: envasetechnologies/.github/actions/checkout-sources@v3
 
       - name: Setup Python
         uses: envasetechnologies/.github/actions/setup-python@v3
