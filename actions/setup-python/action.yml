@@ -30,7 +30,6 @@ runs:
       uses: actions/setup-python@v5
       with:
         python-version: ${{ inputs.python-version }}
-      shell: ${{ inputs.default-shell }}
 
     - name: Install Requirements from PyPI
       if: ${{ inputs.index-url == 'PyPI' }}
