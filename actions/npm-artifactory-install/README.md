@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source
-        uses: envasetechnologies/.github/actions/checkout-sources@v3
+        uses: envasetechnologies/.github/actions/checkout-source@v3
 
       - name: Setup Node
         uses: actions/setup-node@v4

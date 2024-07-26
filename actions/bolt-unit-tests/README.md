@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source
-        uses: envasetechnologies/.github/actions/checkout-sources@v3
+        uses: envasetechnologies/.github/actions/checkout-source@v3
 
       - name: Setup Python
         uses: envasetechnologies/.github/actions/setup-python@v3
