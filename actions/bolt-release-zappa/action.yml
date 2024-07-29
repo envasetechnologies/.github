@@ -21,6 +21,11 @@ inputs:
     required: true
     default: requirements.txt
 
+  index-url:
+    description: Index from where to install packages
+    required: false
+    default: 'PyPI'
+
 runs:
   using: composite
   steps:
@@ -35,10 +40,18 @@ runs:
         python -m pip install --upgrade pip
       shell: ${{ inputs.default-shell }}
 
-    - name: Install production requirements
+    - name: Install production requirements from PyPI
+      if: ${{ inputs.index-url == 'PyPI' }}
       run: | 
         . ./deployment/bin/activate
         python -m pip install -r ${{ inputs.requirements-file }}
+      shell: ${{ inputs.default-shell }}
+
+    - name: Install production requirements from PyPI
+      if: ${{ inputs.index-url != 'PyPI' }}
+      run: | 
+        . ./deployment/bin/activate
+        python -m pip install -r ${{ inputs.requirements-file }} --index-url ${{ intputs.index-url }}
       shell: ${{ inputs.default-shell }}
 
     - name: Install Zappa
