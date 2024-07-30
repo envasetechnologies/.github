@@ -30,4 +30,4 @@ These actions execute commonly implemented bolt tasks.
 
 ## Specialized Deployments
 
-- [bolt-release-zappa](.actions/bolt-release-zappa): Deploys a Flask application to AWS Lambda using Zappa.
+- [bolt-release-zappa](./actions/bolt-release-zappa): Deploys a Flask application to AWS Lambda using Zappa.
