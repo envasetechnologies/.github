@@ -51,7 +51,7 @@ runs:
       if: ${{ inputs.index-url != 'PyPI' }}
       run: | 
         . ./deployment/bin/activate
-        python -m pip install -r ${{ inputs.requirements-file }} --index-url ${{ intputs.index-url }}
+        python -m pip install -r ${{ inputs.requirements-file }} --index-url ${{ inputs.index-url }}
       shell: ${{ inputs.default-shell }}
 
     - name: Install Zappa
