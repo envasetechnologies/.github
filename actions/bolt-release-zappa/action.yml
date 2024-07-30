@@ -70,9 +70,5 @@ runs:
       run: |
           . ./deployment/bin/activate
           bolt ${{ inputs.task }}
-      with:
-        task: ${{ inputs.task }}
-        fetch-tags: ${{ inputs.fetch-tags }}
-        default-shell: ${{ inputs.default-shell }}
       shell: ${{ inputs.default-shell }}
 
