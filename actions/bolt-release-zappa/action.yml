@@ -30,6 +30,11 @@ runs:
   using: composite
   steps:
 
+    - name: Fetch Tags
+      if: ${{ inputs.fetch-tags == 'true' }}
+      run: git fetch --tags
+      shell: ${{ inputs.default-shell }}
+
     - name: Create Virtual Environment
       run: python -m venv deployment
       shell: ${{ inputs.default-shell }}
