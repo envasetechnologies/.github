@@ -10,6 +10,7 @@ These actions setup tools used on the CI/CD process:
 
 - [checkout-source](./actions/checkout-source): Checkout the repository source.
 - [setup-python](./actions/setup-python): Setup of Python and installation of requirements.
+- [setup-node](./actions/setup-node): Setup of node and installation of dependencies.
 
 ## NPM Interaction with Artifactory
 
