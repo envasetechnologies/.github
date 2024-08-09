@@ -19,6 +19,11 @@ These actions work with an NPM index in Artifactory:
 - [npm-artifactory-install](./actions/npm-artifactory-install): Installs NPM packages from Artifactory.
 - [npm-artifactory-publish](./actions/npm-artifactory-publish): Publishes a NPM package to Artifactory.
 
+## Common Actions
+
+The following actions can be used in any kind of project where needed.
+
+- [build-sphinx-docs](./actions/build-sphinx-docs): Build a Sphinx documentation project.
 
 ## Common Bolt Tasks
 

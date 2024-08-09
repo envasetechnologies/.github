@@ -1,0 +1,26 @@
+name: Build Sphinx Docs
+description: Builds documentation for a Sphinx project.
+inputs:
+  
+  default-shell:
+    description: Shell in which to execute the action.
+    required: false
+    default: bash
+
+  docs-dir:
+    description: Directory where the Sphinx project is located.
+    required: false
+    default: ./docs
+
+runs:
+  using: composite
+  steps:
+    - name: Ensure Sphinx Installed
+      run: python -m pip install sphinx
+      shell: ${{ inputs.default-shell }}
+
+    - name: Build HTML Documentation
+      run: make html
+      working-directory: ${{ inputs.docs-dir }}
+      shell: ${{ inputs.default-shell }}
+      
