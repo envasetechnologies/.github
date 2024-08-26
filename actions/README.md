@@ -11,7 +11,7 @@ name: Deploy
 
 on:
   push:
-    branches: [ main ] # Run automatically when pushed to this branch
+    branches: [main] # Run automatically when pushed to this branch
 
   workflow_dispatch: # Allows running of this deployment manually from the GitHub UI
 
@@ -19,7 +19,7 @@ jobs:
   deploy-lambda:
     runs-on: ubuntu-latest
     env:
-      AWS_ACCESS_KEY_ID: ${{ secrets.CD_DEPLOYER_NON_PROD_KEY }} # Deployer AWS access key
+      AWS_ACCESS_KEY_ID: ${{ vars.CD_DEPLOYER_NON_PROD_KEY }} # Deployer AWS access key
       AWS_SECRET_ACCESS_KEY: ${{ secrets.CD_DEPLOYER_NON_PROD_SECRET }} # Deployer AWS secret key
       AWS_DEFAULT_REGION: us-east-1
 
@@ -41,9 +41,11 @@ jobs:
         with:
           stage: test # environment to deploy to (i.e dev, stg, prd, test, sandbox, prod)
 ```
+
 <br>
 
 ## ECS
+
 <br>
 
 The actions in this repo are used to bootstrap and deploy a dockerized ECS instance.
@@ -52,9 +54,9 @@ The actions in this repo are used to bootstrap and deploy a dockerized ECS insta
 
 The pipeline will do the following:
 
-- Build your `task-definition.json` from the template in your repo. 
-- Build your docker image, 
-- Tag your docker image, 
+- Build your `task-definition.json` from the template in your repo.
+- Build your docker image,
+- Tag your docker image,
 - Push your docker image to ECR
 - Deploy your docker image from ECR to your ECS cluster.
 
@@ -165,17 +167,13 @@ The pipeline will do the following:
   "memory": "2048",
   "taskRoleArn": "arn:aws:iam::{{AWS_ACCOUNT_ID}}:role/ecsTaskExecutionRole",
   "family": "{{APP_NAME}}-{{ENVIRONMENT}}",
-  "requiresCompatibilities": [
-    "EC2",
-    "FARGATE"
-  ],
+  "requiresCompatibilities": ["EC2", "FARGATE"],
   "networkMode": "awsvpc",
   "runtimePlatform": {
     "operatingSystemFamily": "LINUX"
   },
   "cpu": "1024"
 }
-
 ```
 
 <br>
@@ -221,7 +219,7 @@ name: Deploy
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
   workflow_dispatch:
 
@@ -253,14 +251,14 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          aws-access-key-id: ${{ secrets.CD_DEPLOYER_NON_PROD_KEY }} # Envase Org Deployer Role, contact Envase Admin for access
+          aws-access-key-id: ${{ vars.CD_DEPLOYER_NON_PROD_KEY }} # Envase Org Deployer Role, contact Envase Admin for access
           aws-secret-access-key: ${{ secrets.CD_DEPLOYER_NON_PROD_SECRET }}
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
 
       - uses: actions/setup-java@v3
         with:
-          distribution: 'corretto'
-          java-version: '17' # Set Java version here
+          distribution: "corretto"
+          java-version: 17 # Set Java version here
 
       - name: Set AWS account id
         run: >
@@ -294,7 +292,7 @@ name: Deploy
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
   workflow_dispatch:
 
@@ -322,13 +320,13 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          aws-access-key-id: ${{ secrets.CD_DEPLOYER_NON_PROD_KEY }}
+          aws-access-key-id: ${{ vars.CD_DEPLOYER_NON_PROD_KEY }}
           aws-secret-access-key: ${{ secrets.CD_DEPLOYER_NON_PROD_SECRET }}
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
 
       - uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: 18
 
       - name: Set AWS account id
         run: >
