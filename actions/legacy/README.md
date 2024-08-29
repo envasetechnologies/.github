@@ -19,7 +19,7 @@ jobs:
   deploy-lambda:
     runs-on: ubuntu-latest
     env:
-      AWS_ACCESS_KEY_ID: ${{ secrets.CD_DEPLOYER_NON_PROD_KEY }} # Deployer AWS access key
+      AWS_ACCESS_KEY_ID: ${{ vars.CD_DEPLOYER_NON_PROD_KEY }} # Deployer AWS access key
       AWS_SECRET_ACCESS_KEY: ${{ secrets.CD_DEPLOYER_NON_PROD_SECRET }} # Deployer AWS secret key
       AWS_DEFAULT_REGION: us-east-1
 
@@ -253,7 +253,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          aws-access-key-id: ${{ secrets.CD_DEPLOYER_NON_PROD_KEY }} # Envase Org Deployer Role, contact Envase Admin for access
+          aws-access-key-id: ${{ vars.CD_DEPLOYER_NON_PROD_KEY }} # Envase Org Deployer Role, contact Envase Admin for access
           aws-secret-access-key: ${{ secrets.CD_DEPLOYER_NON_PROD_SECRET }}
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
 
@@ -322,7 +322,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          aws-access-key-id: ${{ secrets.CD_DEPLOYER_NON_PROD_KEY }}
+          aws-access-key-id: ${{ vars.CD_DEPLOYER_NON_PROD_KEY }}
           aws-secret-access-key: ${{ secrets.CD_DEPLOYER_NON_PROD_SECRET }}
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
 
