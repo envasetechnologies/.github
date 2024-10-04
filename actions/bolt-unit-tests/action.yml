@@ -27,7 +27,7 @@ runs:
       with:
         task: ${{ inputs.task }}
 
-    - run: ls -R ./output
+    - run: echo GENERATED REPORT ${{ inputs.report }}
       shell: ${{ inputs.default-shell }}
 
     - name: Code Coverate Report
