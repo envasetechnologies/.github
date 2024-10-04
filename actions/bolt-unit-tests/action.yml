@@ -16,7 +16,7 @@ inputs:
   report:
     description: The coverage report to generate.
     required: false
-    default: "./output/coverages/unittests_coverage.xml"
+    default: ./output/coverages/unittests_coverage.xml
 runs:
   using: composite
   steps:
