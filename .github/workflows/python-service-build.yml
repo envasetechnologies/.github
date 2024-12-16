@@ -90,8 +90,8 @@ jobs:
           ART_USER: admin
           ART_PASSWORD: ${{ secrets.artifactory-password }}
           AWS_DEFAULT_REGION: ${{ inputs.aws-default-region }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.aws-access-key-id }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.aws-secret-access-key }}
+          AWS_ACCESS_KEY_ID: ${{ vars.PTCI_ENVASE_AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.PTCI_ENVASE_AWS_SECRET_ACCESS_KEY }}
           ENVASE_SERVICE_ACCOUNT_CLIENT_ID_DEV: ${{ secrets.envase-service-account-client-id-dev }}
           ENVASE_SERVICE_ACCOUNT_CLIENT_ID_STG: ${{ secrets.envase-service-account-client-id-stg }}
           ENVASE_SERVICE_ACCOUNT_CLIENT_ID_PRD: ${{ secrets.envase-service-account-client-id-prd }}
@@ -106,7 +106,7 @@ jobs:
         if: failure()
         with:
           webhook_url: ${{ secrets.msteams-webhook }}
-          overwrite: "{title: `${{ github.repository }} build failed at ${{ github.ref_name }}`}"
+          title: "{title: `${{ github.repository }} build failed at ${{ github.ref_name }}`}"
           needs: ${{ toJson(needs) }}
           job: ${{ toJson(job) }}
           steps: ${{ toJson(steps) }}
