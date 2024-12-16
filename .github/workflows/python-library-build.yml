@@ -80,8 +80,8 @@ jobs:
           ART_USER: admin
           ART_PASSWORD: ${{ secrets.artifactory-password }}
           AWS_DEFAULT_REGION: ${{ inputs.aws-default-region }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.aws-access-key-id }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.aws-secret-access-key }}
+          AWS_ACCESS_KEY_ID: ${{ vars.PTCI_ENVASE_AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.PTCI_ENVASE_AWS_SECRET_ACCESS_KEY }}
         with:
           default-shell: ${{ inputs.default-shell }}
       - name: Notify on Failure
@@ -89,7 +89,7 @@ jobs:
         if: failure()
         with:
           webhook_url: ${{ secrets.msteams-webhook }}
-          overwrite: "{title: `${{ github.repository }} build failed at ${{ github.ref_name }}`}"
+          title: "{title: `${{ github.repository }} build failed at ${{ github.ref_name }}`}"
           needs: ${{ toJson(needs) }}
           job: ${{ toJson(job) }}
           steps: ${{ toJson(steps) }}
