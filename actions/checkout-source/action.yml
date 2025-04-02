@@ -15,4 +15,3 @@ runs:
     - name: Show Root Content
       run: ls
       shell: ${{ inputs.default-shell }}
-      

@@ -1,0 +1,96 @@
+on:
+  workflow_call:
+    inputs:
+      runner:
+        description: Runner to use.
+        required: false
+        type: string
+        default: ubuntu-latest
+      default-shell:
+        description: Shell used to run steps.
+        required: false
+        type: string
+        default: bash
+      python-version:
+        description: Python versions in which the job should run.
+        required: false
+        type: string
+        default: '["3.7", "3.8", "3.9"]'
+      release-on:
+        description: Specify the runner in which the library is released.
+        required: false
+        type: string
+        default: "3.9"
+      has-documentation:
+        description: Flag to indicate whether the library contains documentation or not.
+        type: boolean
+        required: false
+        default: true
+      aws-default-region:
+        required: false
+        type: string
+        default: "us-east-1"
+    secrets:
+      artifactory-password:
+        required: true
+      msteams-webhook:
+        required: true
+      aws-access-key-id:
+        required: false
+      aws-secret-access-key:
+        required: false
+
+jobs:
+  verify-library:
+    runs-on: ${{ inputs.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ${{ fromJson(inputs.python-version) }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install Requirements
+        uses: envasetechnologies/.github/actions/python/install-requirements@v1
+        with:
+          index-url: https://admin:${{ secrets.artifactory-password }}@profittools.jfrog.io/profittools/api/pypi/pypi/simple
+          default-shell: ${{ inputs.default-shell }}
+      - name: Run Unit Tests
+        uses: envasetechnologies/.github/actions/python/run-unit-tests@v1
+        with:
+          default-shell: ${{ inputs.default-shell }}
+      - name: Build Library
+        uses: envasetechnologies/.github/actions/python/build-library@v1
+        with: 
+          default-shell: ${{ inputs.default-shell }}
+      - name: Build Documentation
+        if: inputs.has-documentation
+        uses: envasetechnologies/.github/actions/python/build-sphinx-docs@v1
+        with:
+          default-shell: ${{ inputs.default-shell }}
+      - name: Release Library
+        uses: envasetechnologies/.github/actions/python/release@v1
+        if: ${{ matrix.python-version == inputs.release-on }}
+        env:
+          BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+          GIT_USER: ${{ github.actor}}
+          ART_USER: admin
+          ART_PASSWORD: ${{ secrets.artifactory-password }}
+          AWS_DEFAULT_REGION: ${{ inputs.aws-default-region }}
+          AWS_ACCESS_KEY_ID: ${{ vars.PTCI_ENVASE_AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.PTCI_ENVASE_AWS_SECRET_ACCESS_KEY }}
+        with:
+          default-shell: ${{ inputs.default-shell }}
+      - name: Notify on Failure
+        uses: skitionek/notify-microsoft-teams@master
+        if: failure()
+        with:
+          webhook_url: ${{ secrets.msteams-webhook }}
+          title: "{title: `${{ github.repository }} build failed at ${{ github.ref_name }}`}"
+          needs: ${{ toJson(needs) }}
+          job: ${{ toJson(job) }}
+          steps: ${{ toJson(steps) }}
+    

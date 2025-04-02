@@ -1,0 +1,113 @@
+on:
+  workflow_call:
+    inputs:
+      runner:
+        description: Runner to use.
+        required: false
+        type: string
+        default: ubuntu-latest
+      default-shell:
+        description: Shell used to run steps.
+        required: false
+        type: string
+        default: bash
+      python-version:
+        description: Python versions in which the job should run.
+        required: false
+        type: string
+        default: "3.9"
+      release-on:
+        description: Specify the runner in which the library is released.
+        required: false
+        type: string
+        default: "3.9"
+      has-documentation:
+        description: Flag to indicate whether the library contains documentation or not.
+        type: boolean
+        required: false
+        default: true
+      aws-default-region:
+        required: false
+        type: string
+        default: "us-east-1"
+      release-task:
+        required: false
+        type: string
+        default: "post-release"
+    secrets:
+      artifactory-password:
+        required: true
+      msteams-webhook:
+        required: true
+      aws-access-key-id:
+        required: false
+      aws-secret-access-key:
+        required: false
+      envase-service-account-client-id-dev:
+        required: false
+      envase-service-account-client-secret-dev:
+        required: false
+      envase-service-account-client-id-stg:
+        required: false
+      envase-service-account-client-secret-stg:
+        required: false
+      envase-service-account-client-id-prd:
+        required: false
+      envase-service-account-client-secret-prd:
+        required: false
+jobs:
+  build-service:
+    runs-on: ${{ inputs.runner }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Python ${{ inputs.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ inputs.python-version }}
+      - name: Install Requirements
+        uses: envasetechnologies/.github/actions/python/install-requirements@v1
+        with:
+          index-url: https://admin:${{ secrets.artifactory-password }}@profittools.jfrog.io/profittools/api/pypi/pypi/simple
+          default-shell: ${{ inputs.default-shell }}
+      - name: Run Unit Tests
+        uses: envasetechnologies/.github/actions/python/run-unit-tests@v1
+        with:
+          default-shell: ${{ inputs.default-shell }}
+      - name: Run Feature Tests
+        uses: envasetechnologies/.github/actions/python/run-feature-tests@v1
+        with:
+          default-shell: ${{ inputs.default-shell }}
+      - name: Build Documentation
+        if: inputs.has-documentation
+        uses: envasetechnologies/.github/actions/python/build-sphinx-docs@v1
+        with:
+          default-shell: ${{ inputs.default-shell }}
+      - name: Release Service
+        uses: envasetechnologies/.github/actions/python/release@v1
+        env:
+          BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+          GIT_USER: ${{ github.actor}}
+          ART_USER: admin
+          ART_PASSWORD: ${{ secrets.artifactory-password }}
+          AWS_DEFAULT_REGION: ${{ inputs.aws-default-region }}
+          AWS_ACCESS_KEY_ID: ${{ vars.PTCI_ENVASE_AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.PTCI_ENVASE_AWS_SECRET_ACCESS_KEY }}
+          ENVASE_SERVICE_ACCOUNT_CLIENT_ID_DEV: ${{ secrets.envase-service-account-client-id-dev }}
+          ENVASE_SERVICE_ACCOUNT_CLIENT_ID_STG: ${{ secrets.envase-service-account-client-id-stg }}
+          ENVASE_SERVICE_ACCOUNT_CLIENT_ID_PRD: ${{ secrets.envase-service-account-client-id-prd }}
+          ENVASE_SERVICE_ACCOUNT_CLIENT_SECRET_DEV: ${{ secrets.envase-service-account-client-secret-dev }}
+          ENVASE_SERVICE_ACCOUNT_CLIENT_SECRET_STG: ${{ secrets.envase-service-account-client-secret-stg }}
+          ENVASE_SERVICE_ACCOUNT_CLIENT_SECRET_PRD: ${{ secrets.envase-service-account-client-secret-prd }}
+        with:
+          default-shell: ${{ inputs.default-shell }}
+          release-task: ${{ inputs.release-task }}
+      - name: Notify on Failure
+        uses: skitionek/notify-microsoft-teams@master
+        if: failure()
+        with:
+          webhook_url: ${{ secrets.msteams-webhook }}
+          title: "{title: `${{ github.repository }} build failed at ${{ github.ref_name }}`}"
+          needs: ${{ toJson(needs) }}
+          job: ${{ toJson(job) }}
+          steps: ${{ toJson(steps) }}
+    

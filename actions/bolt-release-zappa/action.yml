@@ -47,14 +47,14 @@ runs:
 
     - name: Install production requirements from PyPI
       if: ${{ inputs.index-url == 'PyPI' }}
-      run: | 
+      run: |
         . ./deployment/bin/activate
         python -m pip install -r ${{ inputs.requirements-file }}
       shell: ${{ inputs.default-shell }}
 
     - name: Install production requirements from PyPI
       if: ${{ inputs.index-url != 'PyPI' }}
-      run: | 
+      run: |
         . ./deployment/bin/activate
         python -m pip install -r ${{ inputs.requirements-file }} --index-url ${{ inputs.index-url }}
       shell: ${{ inputs.default-shell }}
@@ -66,7 +66,7 @@ runs:
       shell: ${{ inputs.default-shell }}
 
     - name: List production requirements
-      run: | 
+      run: |
         . ./deployment/bin/activate
         pip list
       shell: ${{ inputs.default-shell }}

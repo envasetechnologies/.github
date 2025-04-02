@@ -44,4 +44,3 @@ runs:
     - name: Display Installed Requirements
       run: pip list
       shell: ${{ inputs.default-shell }}
-
