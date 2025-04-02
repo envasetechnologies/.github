@@ -52,7 +52,7 @@ runs:
         python -m pip install -r ${{ inputs.requirements-file }}
       shell: ${{ inputs.default-shell }}
 
-    - name: Install production requirements from PyPI
+    - name: Install production requirements from specified index.
       if: ${{ inputs.index-url != 'PyPI' }}
       run: |
         . ./deployment/bin/activate
