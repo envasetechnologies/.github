@@ -1,0 +1,49 @@
+name: Setup Node
+description: Setup Node Environment
+inputs:
+
+  default-shell:
+    description: Shell in which to execute the action.
+    required: false
+    default: bash
+
+  node-version:
+    description: Version of node to install.
+    required: false
+    default: '18'
+
+  omit-dev:
+    description: Should dev dependencies be omitted, values yes|no.
+    required: false
+    default: no
+
+  registry:
+    description: Registry URL for artifactory repository.
+    required: false
+    default: https://profittools.jfrog.io/artifactory/api/npm/npm/
+
+  token:
+    description: Artifactory access token.
+    required: true
+
+
+runs:
+  using: composite
+  steps:
+
+    - name: Setup Node
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ inputs.node-version }}
+
+    - name: Install Dependencies
+      uses: envasetechnologies/.github/actions/npm-artifactory-install@v3
+      with:
+        omit-dev: ${{ inputs.omit-dev }}
+        registry: ${{ inputs.registry }}
+        token: ${{ inputs.token }}
+
+    - name: List Installed packages
+      run: npm ls
+      shell: ${{ inputs.default-shell }}
+

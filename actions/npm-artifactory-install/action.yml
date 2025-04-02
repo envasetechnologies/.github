@@ -1,7 +1,6 @@
 name: NPM Artifactory Install
 description: Installs npm dependencies from an artifactory repository.
 inputs:
-
   default-shell:
     description: Default shell in which to run the action.
     required: false
@@ -11,6 +10,11 @@ inputs:
     description: Registry URL for artifactory repository.
     required: false
     default: https://profittools.jfrog.io/artifactory/api/npm/npm/
+
+  omit-dev:
+    description: Should dev dependencies be omitted, values yes|no.
+    required: false
+    default: no
 
   token:
     description: Artifactory access token.
@@ -27,6 +31,15 @@ runs:
         echo "//profittools.jfrog.io/artifactory/api/npm/npm/:_authToken=${{ inputs.token }}" >> .npmrc
       shell: ${{ inputs.default-shell }}
 
+    - name: Set Omit Dev Flag
+      run: |
+        if [ "${{ inputs.omit-dev }}" == "yes" ]; then
+          echo "NPM_OMIT_DEV=--omit=dev" >> $GITHUB_ENV
+        else
+          echo "NPM_OMIT_DEV=" >> $GITHUB_ENV
+        fi
+      shell: ${{ inputs.default-shell }}
+
     - name: Install Dependencies
-      run: npm install --registry ${{ inputs.registry }}
+      run: npm install $NPM_OMIT_DEV --registry ${{ inputs.registry }}
       shell: ${{ inputs.default-shell }}

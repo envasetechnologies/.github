@@ -16,7 +16,7 @@ inputs:
   report:
     description: The coverage report to generate.
     required: false
-    default: "./output/coverage/unittests_coverage.xml"
+    default: output/coverage/unittests_coverage.xml
 runs:
   using: composite
   steps:
@@ -48,7 +48,7 @@ runs:
 
     - name: Add Coverage PR Comment
       uses: marocchino/sticky-pull-request-comment@v2
-      if: always()
+      if: github.event_name == 'pull_request'
       with:
         recreate: true
         path: code-coverage-results.md

@@ -21,9 +21,19 @@ inputs:
     required: true
     default: requirements.txt
 
+  index-url:
+    description: Index from where to install packages
+    required: false
+    default: 'PyPI'
+
 runs:
   using: composite
   steps:
+
+    - name: Fetch Tags
+      if: ${{ inputs.fetch-tags == 'true' }}
+      run: git fetch --tags
+      shell: ${{ inputs.default-shell }}
 
     - name: Create Virtual Environment
       run: python -m venv deployment
@@ -35,10 +45,18 @@ runs:
         python -m pip install --upgrade pip
       shell: ${{ inputs.default-shell }}
 
-    - name: Install production requirements
-      run: | 
+    - name: Install production requirements from PyPI
+      if: ${{ inputs.index-url == 'PyPI' }}
+      run: |
         . ./deployment/bin/activate
         python -m pip install -r ${{ inputs.requirements-file }}
+      shell: ${{ inputs.default-shell }}
+
+    - name: Install production requirements from specified index.
+      if: ${{ inputs.index-url != 'PyPI' }}
+      run: |
+        . ./deployment/bin/activate
+        python -m pip install -r ${{ inputs.requirements-file }} --index-url ${{ inputs.index-url }}
       shell: ${{ inputs.default-shell }}
 
     - name: Install Zappa
@@ -48,7 +66,7 @@ runs:
       shell: ${{ inputs.default-shell }}
 
     - name: List production requirements
-      run: | 
+      run: |
         . ./deployment/bin/activate
         pip list
       shell: ${{ inputs.default-shell }}
@@ -57,9 +75,5 @@ runs:
       run: |
           . ./deployment/bin/activate
           bolt ${{ inputs.task }}
-      with:
-        task: ${{ inputs.task }}
-        fetch-tags: ${{ inputs.fetch-tags }}
-        default-shell: ${{ inputs.default-shell }}
       shell: ${{ inputs.default-shell }}
 
