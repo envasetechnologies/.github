@@ -1,10 +1,6 @@
 # Checkout Source
 
-<<<<<<< HEAD
 `envasetechnologies/.github/actions/checkout-source@v3`
-=======
-`envasetechnologies/.github/actions/checkout-sources@v3`
->>>>>>> master
 
 This task wraps the standard `checkout` action. This allows us to use the same version of the action in all workflows and update it when needed.
 
