@@ -1,7 +1,6 @@
 name: Setup Node
 description: Setup Node Environment
 inputs:
-
   default-shell:
     description: Shell in which to execute the action.
     required: false
@@ -10,7 +9,7 @@ inputs:
   node-version:
     description: Version of node to install.
     required: false
-    default: '18'
+    default: "22"
 
   omit-dev:
     description: Should dev dependencies be omitted, values yes|no.
@@ -26,13 +25,11 @@ inputs:
     description: Artifactory access token.
     required: true
 
-
 runs:
   using: composite
   steps:
-
     - name: Setup Node
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ inputs.node-version }}
 
@@ -46,4 +43,3 @@ runs:
     - name: List Installed packages
       run: npm ls
       shell: ${{ inputs.default-shell }}
-
