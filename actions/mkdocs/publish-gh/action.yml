@@ -1,0 +1,14 @@
+name: Publish GH
+description: Publishes documentation to GitHub Pages
+inputs:
+  default-shell:
+    description: Shell in which to execute the action.
+    required: false
+    default: bash
+
+runs:
+  using: composite
+  steps:
+    - name: Publish documentation
+      run: uv run mkdocs gh-deploy
+      shell: ${{ inputs.default-shell }}
