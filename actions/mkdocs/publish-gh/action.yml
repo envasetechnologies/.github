@@ -16,5 +16,5 @@ runs:
     - name: Publish documentation
       env:
         GITHUB_TOKEN: ${{ inputs.github-token }}
-      run: uv run mkdocs gh-deploy
+      run: uv run mkdocs gh-deploy --force
       shell: ${{ inputs.default-shell }}
