@@ -10,5 +10,5 @@ runs:
   using: composite
   steps:
     - name: Build documentation
-      run: uv run mkdocs Build
+      run: uv run mkdocs build
       shell: ${{ inputs.default-shell }}
