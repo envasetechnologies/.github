@@ -1,0 +1,14 @@
+name: mkdocs-build
+description: Builds MkDocs documentation project that uses `uv`
+inputs:
+  default-shell:
+    description: Shell in which to execute the action.
+    required: false
+    default: bash
+
+runs:
+  using: composite
+  steps:
+    - name: Build documentation
+      run: uv run mkdocs build
+      shell: ${{ inputs.default-shell }}
