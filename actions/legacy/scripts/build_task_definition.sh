@@ -28,7 +28,7 @@ echo "APP_VERSION=${APP_VERSION}" >> $GITHUB_ENV
 
 echo "---------- $SECRET_ID -------------"
 
-output=$(aws secretsmanager get-secret-value --secret-id $SECRET_ID --output text)
+output=$(aws secretsmanager get-secret-value --secret-id $SECRET_ID --region $AWS_DEFAULT_REGION --output text)
 splitOutput=( $output )
 secretArn=${splitOutput[0]}
 export secretArn=$secretArn
@@ -39,7 +39,7 @@ add_xray_deamon() {
             "logDriver": "awslogs",
             "options": {
               "awslogs-group": "/ecs/{{APP_NAME}}-{{ENVIRONMENT}}",
-              "awslogs-region": "us-east-1",
+              "awslogs-region": "'"$AWS_DEFAULT_REGION"'",
               "awslogs-stream-prefix": "ecs"
             }
           },
@@ -64,9 +64,8 @@ add_xray_deamon() {
 echo "Creating task-definition.json file"
 cat task-definition-template.json | mo > task-definition.json
 
-if [ "$ENVIRONMENT" == "prod" ] || [ "$ENVIRONMENT" == "prd" ]; then
-  add_xray_deamon
-fi
+# Add X-Ray daemon for all environments (prod, stg, dev)
+add_xray_deamon
 
 echo "Task definition created"
 ls -la
