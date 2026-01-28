@@ -28,18 +28,22 @@ echo "APP_VERSION=${APP_VERSION}" >> $GITHUB_ENV
 
 echo "---------- $SECRET_ID -------------"
 
-output=$(aws secretsmanager get-secret-value --secret-id $SECRET_ID --region $AWS_DEFAULT_REGION --output text)
+# Get the AWS region from environment or AWS CLI config
+AWS_REGION=${AWS_DEFAULT_REGION:-$(aws configure get region)}
+echo "Using AWS region: $AWS_REGION"
+
+output=$(aws secretsmanager get-secret-value --secret-id $SECRET_ID --region $AWS_REGION --output text)
 splitOutput=( $output )
 secretArn=${splitOutput[0]}
 export secretArn=$secretArn
 
-add_xray_deamon() {
+add_xray_daemon() {
   cat task-definition-template.json | $JQ_PATH '.containerDefinitions += [{
             "logConfiguration": {
             "logDriver": "awslogs",
             "options": {
               "awslogs-group": "/ecs/{{APP_NAME}}-{{ENVIRONMENT}}",
-              "awslogs-region": "'"$AWS_DEFAULT_REGION"'",
+              "awslogs-region": "'"$AWS_REGION"'",
               "awslogs-stream-prefix": "ecs"
             }
           },
@@ -64,8 +68,9 @@ add_xray_deamon() {
 echo "Creating task-definition.json file"
 cat task-definition-template.json | mo > task-definition.json
 
-# Add X-Ray daemon for all environments (prod, stg, dev)
-add_xray_deamon
+# Add X-Ray daemon for all environments to prevent client errors
+# (Application code sends traces regardless of environment)
+add_xray_daemon
 
 echo "Task definition created"
 ls -la
