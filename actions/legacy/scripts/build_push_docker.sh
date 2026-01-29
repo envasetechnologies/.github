@@ -74,6 +74,7 @@ fi
 if [ -n "$IMAGE_TAG" ]; then
     echo ---------- Using image tag ----------
     docker tag $APP_NAME $ECR_URI:$IMAGE_TAG-$SHORT_SHA
+    docker tag $APP_NAME $ECR_URI:latest
 
     echo pushing
     docker push $ECR_URI -a
@@ -81,6 +82,7 @@ if [ -n "$IMAGE_TAG" ]; then
 else
     echo ---------- Tagging with app version $APP_VERSION ----------
     docker tag $APP_NAME $ECR_URI:$APP_VERSION-$SHORT_SHA
+    docker tag $APP_NAME $ECR_URI:latest
 
     echo pushing $ECR_URI
     docker push $ECR_URI -a
